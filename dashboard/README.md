@@ -4,7 +4,7 @@
 
 AquaExplorer Pro is a sophisticated dashboard designed for Remotely Operated Vehicles (ROVs) traversing underwater. It serves as a comprehensive tool to visualize real-time sensor data, control thrusters, and monitor environmental parameters, enabling seamless interaction with the ROV.
 
-![Dashboard Screenshot](path-to-screenshot.png) <!-- Replace with the actual path to your screenshot -->
+![Dashboard Screenshot](path-to-screenshot.PNG) <!-- Replace with the actual path to your screenshot -->
 
 ## Features
 
