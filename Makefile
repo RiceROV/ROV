@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -Wall -std=c++11
 
 # Targets
-TARGET = pid_controller
+TARGET = simulate
 
 # Source and Object Files
 SRCDIR = src
