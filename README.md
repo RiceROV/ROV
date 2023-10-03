@@ -2,6 +2,49 @@
 
 Welcome to the Rice ROV senior design project repository. This project involves the collective effort of students from the departments of electrical & computer engineering and mechanical engineering.
 
+## 🛠 Getting Started with Baymax Pro Dashboard
+
+To set up the Baymax Pro Dashboard and integrate with the Raspberry Pi sensor data, follow these steps:
+
+1. **Clone the repository**:
+
+    ```bash
+    git clone -b dashboard https://github.com/RiceROV/ROV
+    ```
+
+2. **Navigate to the Dashboard Directory**:
+
+    ```bash
+    cd dashboard
+    ```
+
+3. **Initialize and install necessary packages**:
+
+    ```bash
+    npm init -y
+    npm install electron --save
+    ```
+
+4. **SSH into your Raspberry Pi 4** through the IP over Rice Visitor.
+
+5. **Once inside the Raspberry Pi, navigate to the sensor directory**:
+
+    ```bash
+    cd ROV/sensor
+    ```
+
+6. **Start the Flask Server on the Pi** to begin transmitting data:
+
+    ```bash
+    python3 server.py
+    ```
+
+7. **Finally, initiate the Baymax Pro Dashboard on your main machine**:
+
+    ```bash
+    npm start
+    ```
+    
 ## 🚀 Repository Purpose
 
 This repository is dedicated to housing both the control code for the ROV and its machine learning applications.
