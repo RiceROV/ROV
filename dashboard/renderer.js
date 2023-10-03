@@ -1,5 +1,5 @@
 
-const RASPBERRY_PI_IP = '<your_raspberry_pi_ip>';
+const RASPBERRY_PI_IP = '168.5.140.178';
 
 // Initialize Graphs Logic
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -9,7 +9,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     // Simulate sensor data and update the graph at regular intervals
     setInterval(() => {
-        updateGraph(chart);
+        fetch('http://168.5.140.178:5000/sensor_data')
+        .then(response => response.json())
+        .then(data => {
+            let sensorTemp = data.temp;
+            let accelX = data.acceleration_x;
+            let accelY = data.acceleration_y;
+            let accelZ = data.acceleration_z;
+            let gyroX = data.gyro_x;
+            let gyroY = data.gyro_y;
+            let gyroZ = data.gyro_z;
+
+            document.getElementById('sensorTemp').querySelector('.status-black').textContent = data.temp + "°C";
+            document.getElementById('accelData').querySelectorAll('.status-black')[0].textContent = data.acceleration_x;
+            document.getElementById('accelData').querySelectorAll('.status-black')[1].textContent = data.acceleration_y;
+            document.getElementById('accelData').querySelectorAll('.status-black')[2].textContent = data.acceleration_z;
+            document.getElementById('gyroData').querySelectorAll('.status-black')[0].textContent = data.gyro_x;
+            document.getElementById('gyroData').querySelectorAll('.status-black')[1].textContent = data.gyro_y;
+            document.getElementById('gyroData').querySelectorAll('.status-black')[2].textContent = data.gyro_z;
+
+            updateGraph(chart, sensorTemp, accelZ);  // Using acceleration Z as a placeholder for depth
+        })
+        .catch(error => console.error('Error fetching sensor data:', error));
     }, 1000); // Update every 1 second. Adjust as needed.
 
     // Initialize Status Updates
@@ -63,11 +84,11 @@ function getNewDataGraphs() {
     return {div, chart}; // Return both the div and the chart
 }
 
-function updateGraph(chart) {
+function updateGraph(chart, newTemp, newDepth) {
     try {
         // Simulate new sensor data
-        const newDepth = Math.random() * 100; // Replace with actual depth sensor data
-        const newTemp = Math.random() * 30; // Replace with actual temperature sensor data
+        // const newDepth = Math.random() * 100; // Replace with actual depth sensor data
+        // const newTemp = Math.random() * 30; // Replace with actual temperature sensor data
         const newTime = chart.data.labels.length + 1; // Simulating time in seconds
 
         // Update the graph with new data points
@@ -95,3 +116,8 @@ function updateStatus() {
 }
 
 // ... (existing placeholder functions)
+
+// Fetch sensor data from Raspberry Pi and update the dashboard
+// setInterval(() => {
+    
+// }, 1000);

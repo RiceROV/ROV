@@ -65,6 +65,10 @@ p {
     color: white !important;
 }
 
+.status-black {
+    color: black !important;
+}
+
 .status-green {
     color: #52B788 !important; /* Green color */
 }
