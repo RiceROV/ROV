@@ -23,33 +23,54 @@ def main(stdscr):
         key = stdscr.getch()
         cmd = ""
         # Process arrow keys
-        if key == curses.KEY_RIGHT:
-            x = min(x + 1, max_x - 1)
+        if key == "d":
             cmd = "1"
-        elif key == curses.KEY_LEFT:
-            x = max(x - 1, 0)
+        elif key == "D":
             cmd = "2"
-        elif key == curses.KEY_DOWN:
-            y = min(y + 1, max_y - 1)
+        elif key == "a":
             cmd = "3"
+        elif key == "A":
+            cmd = "4"
+        elif key == "e":
+            cmd = "5"
+        elif key == "E":
+            cmd = "6"
+        elif key == "e":
+            cmd = "7"
+        elif key == "E":
+            cmd = "8"
+        elif key == "s":
+            cmd = "9"
+        elif key == "S":
+            cmd = "10"
         elif key == curses.KEY_UP:
             y = max(y - 1, 0)
-            cmd = "4"
+            cmd = "11"
+        elif key == curses.KEY_DOWN:
+            y = min(y + 1, max_y - 1)
+            cmd = "12"
+        # elif key == curses.KEY_RIGHT:
+        #     x = min(x + 1, max_x - 1)
+        #     cmd = "1"
+        # elif key == curses.KEY_LEFT:
+        #     x = max(x - 1, 0)
+        #     cmd = "2"
         elif key == ord('/'):
-            cmd = "5"
+            cmd = "13"
         elif key == ord(' '):
-            cmd = "6"
+            cmd = "14"
+            
         # Test the invidual motor numbers
         elif key == ord('1'):
-            cmd = "7"
+            cmd = "15"
         elif key == ord('2'):
-            cmd = "8"
+            cmd = "16"
         elif key == ord('3'):
-            cmd = "9"
+            cmd = "17"
         elif key == ord('4'):
-            cmd = "10"
+            cmd = "18"
         elif key == ord('5'):
-            cmd = "11"
+            cmd = "19"
 
         client_socket.sendall(cmd.encode('utf-8'))
         stdscr.clear()
