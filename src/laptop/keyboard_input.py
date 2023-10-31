@@ -39,8 +39,18 @@ def main(stdscr):
             cmd = "5"
         elif key == ord(' '):
             cmd = "6"
-        elif key == ord('q'):
-            break  # Quit the program on 'q' key
+        # Test the invidual motor numbers
+        elif key == ord('1'):
+            cmd = "7"
+        elif key == ord('2'):
+            cmd = "8"
+        elif key == ord('3'):
+            cmd = "9"
+        elif key == ord('4'):
+            cmd = "10"
+        elif key == ord('5'):
+            cmd = "11"
+
         client_socket.sendall(cmd.encode('utf-8'))
         stdscr.clear()
         stdscr.addch(y, x, 'X')
@@ -50,11 +60,12 @@ def main(stdscr):
         time.sleep(0.01)  # Sleep for 0.1 seconds
 
 def connect_to_pi():
-    host = '168.5.177.28'  # Listen on all available network interfaces
+    print("Got this far")
+    host = 'ROVpi.local'  # Listen on all available network interfaces
     port = 20001  # Choose a port number
-
     # Create a socket object
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print("Got past here")
 
     # Bind the socket to the host and port
     client_socket.connect((host, port))
