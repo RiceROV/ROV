@@ -23,25 +23,25 @@ def main(stdscr):
         key = stdscr.getch()
         cmd = ""
         # Process arrow keys
-        if key == "d":
-            cmd = "1"
-        elif key == "D":
-            cmd = "2"
-        elif key == "a":
-            cmd = "3"
-        elif key == "A":
-            cmd = "4"
-        elif key == "e":
-            cmd = "5"
-        elif key == "E":
-            cmd = "6"
-        elif key == "e":
-            cmd = "7"
-        elif key == "E":
-            cmd = "8"
-        elif key == "s":
-            cmd = "9"
-        elif key == "S":
+        if key == ord('d'):
+            cmd = "21"
+        elif key == ord('D'):
+            cmd = "22"
+        elif key == ord('a'):
+            cmd = "23"
+        elif key == ord('A'):
+            cmd = "24"
+        elif key == ord('e'):
+            cmd = "25"
+        elif key == ord('E'):
+            cmd = "26"
+        elif key == ord('w'):
+            cmd = "27"
+        elif key == ord('W'):
+            cmd = "28"
+        elif key == ord('s'):
+            cmd = "29"
+        elif key == ord('S'):
             cmd = "10"
         elif key == curses.KEY_UP:
             y = max(y - 1, 0)
@@ -59,7 +59,7 @@ def main(stdscr):
             cmd = "13"
         elif key == ord(' '):
             cmd = "14"
-            
+
         # Test the invidual motor numbers
         elif key == ord('1'):
             cmd = "15"
@@ -72,6 +72,20 @@ def main(stdscr):
         elif key == ord('5'):
             cmd = "19"
 
+        elif key == ord('6'):
+            cmd = "52"
+        elif key == ord('7'):
+            cmd = "53"
+        elif key == ord('8'):
+            cmd = "54"
+        elif key == ord('9'):
+            cmd = "55"
+        elif key == ord('0'):
+            cmd = "56"
+        elif key == ord('j'):
+            cmd = "50"
+        elif key == ord('J'):
+            cmd = "51"
         client_socket.sendall(cmd.encode('utf-8'))
         stdscr.clear()
         stdscr.addch(y, x, 'X')
@@ -81,12 +95,11 @@ def main(stdscr):
         time.sleep(0.01)  # Sleep for 0.1 seconds
 
 def connect_to_pi():
-    print("Got this far")
-    host = 'ROVpi.local'  # Listen on all available network interfaces
-    port = 20001  # Choose a port number
+    host = '169.254.131.141'  # Listen on all available network interfaces
+    port = 25005  # Choose a port number
     # Create a socket object
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("Got past here")
+    print("Attempting to establish connection\n")
 
     # Bind the socket to the host and port
     client_socket.connect((host, port))
