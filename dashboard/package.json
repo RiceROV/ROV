@@ -1,7 +1,7 @@
 {
   "name": "refined_dashboard",
   "version": "1.0.0",
-  "description": "",
+  "description": "**BayMax Pro** is a sophisticated dashboard designed for **Remotely Operated Vehicles (ROVs)** traversing underwater. It serves as a comprehensive tool to visualize real-time sensor data, control thrusters, and monitor environmental parameters, enabling seamless interaction with the ROV.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^26.2.2"
+    "electron": "^26.4.1",
+    "three": "^0.157.0"
   }
 }

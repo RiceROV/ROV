@@ -12,13 +12,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         fetch('http://168.5.140.178:5000/sensor_data')
         .then(response => response.json())
         .then(data => {
-            let sensorTemp = data.temp;
-            let accelX = data.acceleration_x;
-            let accelY = data.acceleration_y;
-            let accelZ = data.acceleration_z;
-            let gyroX = data.gyro_x;
-            let gyroY = data.gyro_y;
-            let gyroZ = data.gyro_z;
+            window.sensorData = {
+                accelX: data.acceleration_x,
+                accelY: data.acceleration_y,
+                accelZ: data.acceleration_z,
+                gyroX: data.gyro_x,
+                gyroY: data.gyro_y,
+                gyroZ: data.gyro_z
+            };
+            
 
             document.getElementById('sensorTemp').querySelector('.status-black').textContent = data.temp + "°C";
             document.getElementById('accelData').querySelectorAll('.status-black')[0].textContent = data.acceleration_x;

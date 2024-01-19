@@ -1,15 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive Design -->
-    <title>AquaExplorer Pro - ROV Dashboard</title>
+    <title>BayMax Pro - ROV Dashboard</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Updated CSS file -->
+    <!-- <script src="https://unpkg.com/three/build/three.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/three/examples/jsm/controls/OrbitControls.js"></script> -->
+
 </head>
 
 <body role="application">
@@ -38,17 +40,42 @@
         <section class="row" role="region" aria-labelledby="navigation-identification">
             <div class="col-md-6 box" id="navigation-identification">
                 <h3>Intelligent Navigation and Identification</h3>
-                <p id="objectIdentification">Object Identification: [Identifications Here]</p>
+                <!-- <div id="nav" style="width: 100%; height: 400px;"></div> -->
+                <canvas id="nav" style="width: 100%; height: 400px;"></canvas>
+                <script type="module" src="/rovVisualization.js"></script>            
             </div>
             
             <div class="col-md-6 box" id="data-graphs">
                 <h3>Data Graphs</h3>
                 <div id="dataGraphs"></div>
+                <!-- <div id="accelerometerGraph"></div>
+                <div id="gyroscopeGraph"></div> -->
             </div>
         </section>
     </main>
     
-    <script src="renderer.js"></script> <!-- Updated JavaScript file -->
+    <!-- <script src='http://threejs.org/examples/js/controls/OrbitControls.js'></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
+    <!-- commented out below to test -->
+    <!-- <script src="renderer.js"></script> -->
 </body>
 
 </html>
+
+<!-- 
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <canvas id="nav"></canvas>
+    
+  </body>
+
+  
+</html> -->
