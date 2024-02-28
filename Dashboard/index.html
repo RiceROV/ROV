@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive Design -->
+    <title>BayMax Pro - ROV Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Updated CSS file -->
+
+</head>
+
+<body role="application">
+    <header role="banner">
+        <h1 class="title">BayMax Pro - ROV Dashboard</h1>
+    </header>
+    
+    <main role="main" class="container-fluid">
+        <section class="row" role="region" aria-labelledby="core-system">
+            <div class="col-md-6 box" id="core-system">
+                <h3>Core System Information</h3>
+                <p id="rovStatus">ROV Status FAKE: <span class="status-white">Operating</span></p>
+                <p id="batteryLevel">Battery Level FAKE: <span class="status-green">80%</span></p>
+                <p id="depthGauge">Depth FAKE: <span class="status-blue">30m</span></p>
+            </div>
+            
+            <div class="col-md-6 box" id="environmental-data">
+                <h3>Sensor Data</h3>
+                <p id="sensorTemp">Sensor Temperature: <span class="status-black">--°C</span></p>
+                <p id="accelData">Accelerometer Data: X <span class="status-black">--</span>, Y <span class="status-black">--</span>, Z <span class="status-black">--</span></p>
+                <p id="gyroData">Gyroscope Data: X <span class="status-black">--</span>, Y <span class="status-black">--</span>, Z <span class="status-black">--</span></p>
+                <!-- Add new sensor data elements here -->
+                <p>Yaw: <span id="yawData" class="status-black">--</span></p>
+                <p>Roll: <span id="rollData" class="status-black">--</span></p>
+                <p>Pitch: <span id="pitchData" class="status-black">--</span></p>
+                <p>BCD States: 
+                    B1 <span id="bcdData1">--</span>,
+                    B2 <span id="bcdData2">--</span>,
+                    B3 <span id="bcdData3">--</span>,
+                    B4 <span id="bcdData4">--</span>
+                </p>
+                <p>Thruster Speeds: 
+                    T1 <span id="thrusterData1">--</span>,
+                    T2 <span id="thrusterData2">--</span>,
+                    T3 <span id="thrusterData3">--</span>,
+                    T4 <span id="thrusterData4">--</span>,
+                    T5 <span id="thrusterData5">--</span>,
+                    T6 <span id="thrusterData6">--</span>
+                </p>
+            </div>            
+        </section>
+        
+        <section class="row" role="region" aria-labelledby="navigation-identification">
+            <div class="col-md-6 box" id="navigation-identification">
+                <h3>Simulation</h3>
+                <canvas id="nav" tabindex="0" style="width: 50%; height: 400px;"></canvas>
+                <!-- This Script below renders the Simulation. -->
+                <script type="module" src="/simRender.js"></script>            
+            </div>
+            
+            <div class="col-md-6 box" id="data-graphs">
+                <h3>Data Graphs</h3>
+                <div id="dataGraphs"></div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- This Script below updates the dashboard. -->
+    <script src="dashUpdate.js"></script>
+</body>
+
+</html>
