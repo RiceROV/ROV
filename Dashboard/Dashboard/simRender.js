@@ -61,7 +61,7 @@ scene.fog = new THREE.FogExp2(0xaaaaaa, 0.0007); // Adjust color and density
 const water = new Water(waterGeometry, {
     textureWidth: 512,
     textureHeight: 512,
-    waterNormals: new THREE.TextureLoader().load('waternormals.jpg', function (texture) {
+    waterNormals: new THREE.TextureLoader().load('textures/waternormals.jpg', function (texture) {
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     }),
     alpha: 1.0,
@@ -91,7 +91,7 @@ scene.add(sunLight);
 //
 // Set up seafloor
 // 
-const seafloorTexture = new THREE.TextureLoader().load('seafloorTexture.jpg'); 
+const seafloorTexture = new THREE.TextureLoader().load('textures/seafloorTexture.jpg'); 
 
 // Create seafloor geometry
 const seafloorGeometry = new THREE.PlaneGeometry(10000, 10000);
@@ -115,7 +115,8 @@ scene.add(seafloor);
 //
 
 const loader = new GLTFLoader();
-loader.load('untitled_scaled.glb', function (gltf) {
+//untitled_scaled.glb is the ROV CAD model
+loader.load('textures/untitled_scaled.glb', function (gltf) {
     gltf.scene.traverse(function (child) {
         if (child.isMesh) {
             child.material = new THREE.MeshStandardMaterial({ color: 0xffffff }); // White color
