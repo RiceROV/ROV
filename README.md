@@ -4,7 +4,7 @@ Welcome to the Rice ROV senior design project repository. This project involves 
 
 ## 🚀 Repository Purpose
 
-This repository is dedicated to housing both the control code for the ROV and its machine learning applications.
+This repository is dedicated to housing code for the ROV, specifically its Web Dashboard.
 
 ## 🎯 Objectives
 
