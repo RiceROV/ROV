@@ -1,36 +1,32 @@
-from flask import Flask, jsonify
-from flask_socketio import SocketIO
-import json
+# To take from and merge with Spencer's TCP code
 
-app = Flask(__name__)
-socketio = SocketIO(app)
+import socketio
+import time
 
-json_file_name = 'yaw_roll_pitch_data.json'
+# Flask-SocketIO server URL
+sio = socketio.Client()
 
-@socketio.on('connect')
-def test_connect():
-    print('Client connected')
+@sio.event
+def connect():
+    print("Connected to Flask-SocketIO server")
 
-@socketio.on('disconnect')
-def test_disconnect():
-    print('Client disconnected')
-
-@socketio.on('imu_data')
-def handle_imu_data(data):
-    # Process the incoming data, similar to your POST request handler
-    if isinstance(data, list) and len(data) == 3:
-        yaw_roll_pitch = {
-            "yaw": data[0],
-            "roll": data[1],
-            "pitch": data[2]
-        }
-
-        with open(json_file_name, 'w') as json_file:
-            json.dump(yaw_roll_pitch, json_file)
-
-        print("Data received and stored:", yaw_roll_pitch)
-    else:
-        print("Invalid data format")
+@sio.event
+def disconnect():
+    print("Disconnected from Flask-SocketIO server")
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    sio.connect('http://localhost:5000')
+    
+    try:
+        while True:
+            # Example IMU data, replace with your actual data
+            imu_data = {'yaw': 1.23, 'roll': 4.56, 'pitch': 7.89}
+            
+            # Send IMU data to the server
+            sio.emit('imu_data', imu_data)
+            
+            # Wait for a bit before sending the next set of data
+            time.sleep(1)  # Adjust as needed based on your data rate
+    except KeyboardInterrupt:
+        print("Keyboard interrupt, disconnecting...")
+        sio.disconnect()
