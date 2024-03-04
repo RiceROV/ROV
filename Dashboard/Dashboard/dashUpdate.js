@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Get sensor data and update the graph at regular intervals
     setInterval(() => {
-        fetch('http://168.4.138.248:5000/euler')
+        fetch('http://localhost:5000/getdata')
         .then(response => response.json())
         .then(data => {
             if (!data.error) {
