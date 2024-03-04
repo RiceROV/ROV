@@ -10,12 +10,15 @@ from flask import Flask, jsonify
 from flask_socketio import SocketIO
 import threading
 import socket
+from flask_cors import CORS  # Import CORS
 import struct
 import time
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins='http://localhost:5173')
 
 # Placeholder route
 @app.route('/getdata')
@@ -36,7 +39,8 @@ def fetch_and_emit_data():
         while True:
             # Receive data
             data = sock.recv(6)  # Assuming we're reading exactly 6 bytes for 3 int16 values
-            
+            # constant test int16s
+            # data = b'\x00\x00\x00\x00\x00\x00'
             if data:
                 # Unpack the data. ">hhh" means 3 big-endian signed short (int16) values.
                 int1, int2, int3 = struct.unpack('>hhh', data)

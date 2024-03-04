@@ -17,25 +17,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Get sensor data and update the graph at regular intervals
     setInterval(() => {
-        fetch('http://localhost:5000/getdata')
-        .then(response => response.json())
-        .then(data => {
-            if (!data.error) {
-                
-                // To Chart with updateGraph()
-                yaw = data.yaw;
-                roll = data.roll;
-                pitch = data.pitch;
-                
-                // To update Dashboard with actual values
-                document.getElementById('yawData').textContent = data.yaw.toFixed(2);
-                document.getElementById('rollData').textContent = data.roll.toFixed(2);
-                document.getElementById('pitchData').textContent = data.pitch.toFixed(2);
-            } else {
-                console.error('Euler angles not available.');
-            }
-        })
-        .catch(error => console.error('Error fetching Euler angles:', error));
+        var socket = io.connect('http://localhost:5000');
+
+        socket.on('connect', function() {
+            console.log('WebSocket connected!');
+        });
+        
+        // Listen for 'sensor_data' events from the server
+        socket.on('sensor_data', function(data) {
+            console.log('Received sensor data:', data);
+        
+            // Update the dashboard with the received data
+            document.getElementById('yawData').textContent = data.yaw.toFixed(2);
+            document.getElementById('rollData').textContent = data.roll.toFixed(2);
+            document.getElementById('pitchData').textContent = data.pitch.toFixed(2);
+        
+            // Update the graph with the new data
+            // updateGraph(chart, data.yaw, data.roll, data.pitch);
+        });
 
         updateGraph(chart, yaw, roll, pitch)
     }, 1000); // Fetch the Euler angles every 1 second
