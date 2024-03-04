@@ -2,7 +2,9 @@
 
 // Need to replace with RPI ethernet static IP
 // Right now this is set to RPI IP when on Rice Visitor Network
-const RASPBERRY_PI_IP = '168.5.140.178';
+// Seems to be UNNEEDED now as Sensor Data is transmitting from Matlab
+// const RASPBERRY_PI_IP = '168.5.140.178';
+
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const dataGraphs = document.getElementById('dataGraphs');
