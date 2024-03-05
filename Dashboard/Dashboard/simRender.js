@@ -156,7 +156,7 @@ camera.lookAt(0, 0, 0);
 // GET SENSOR DATA FOR ROTATION
 
 function initSocketConnection() {
-    var socket = io.connect('http://localhost:5001');
+    var socket = io.connect('http://localhost:30001');
 
     socket.on('connect', function() {
         console.log('WebSocket connected!');

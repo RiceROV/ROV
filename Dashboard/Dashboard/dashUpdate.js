@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     roll = 0;
     pitch = 0;
 
-    var socket = io.connect('http://localhost:5001');
+    var socket = io.connect('http://localhost:30001');
 
     socket.on('connect', function() {
         console.log('WebSocket connected!');
@@ -26,9 +26,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log('Received sensor data:', data);
     
         // Update the dashboard with the received data
-        document.getElementById('yawData').textContent = data.yaw.toFixed(2);
-        document.getElementById('rollData').textContent = data.roll.toFixed(2);
-        document.getElementById('pitchData').textContent = data.pitch.toFixed(2);
+        document.getElementById('yawData').textContent = data.yaw.toFixed(8);
+        document.getElementById('rollData').textContent = data.roll.toFixed(8);
+        document.getElementById('pitchData').textContent = data.pitch.toFixed(8);
     
         // Update the graph with the new data
         updateGraph(chart, data.yaw, data.roll, data.pitch);

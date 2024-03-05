@@ -38,19 +38,35 @@ def fetch_and_emit_data():
         
         while True:
             # Receive data
-            data = sock.recv(6)  # Assuming we're reading exactly 6 bytes for 3 int16 values
+            data = sock.recv(24)  # Assuming we're reading exactly 6 bytes for 3 int16 values
+            
             # constant test int16s
-            # data = b'\x00\x00\x00\x00\x00\x00'
+            # data = b'\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00'
             if data:
                 # Unpack the data. ">hhh" means 3 big-endian signed short (int16) values.
-                int1, int2, int3 = struct.unpack('>hhh', data)
+                int1, int2, int3 = struct.unpack('>ddd', data)
+                print(type(int1))
                 dash_data = {'yaw': int1, 'roll': int2, 'pitch': int3}
+                
                 print(f"Received int16 values: {dash_data['yaw']}, {dash_data['roll']}, {dash_data['pitch']}")
                 
                 # Emit the data to all connected Socket.IO clients
                 socketio.emit('sensor_data', dash_data)
                 
-            time.sleep(1)  # Adjust sleep time as needed
+            time.sleep(.05)  # Adjust sleep time as needed
+
+            # sock.setblocking(False)  # Set socket to non-blocking mode
+
+            # while True:
+            #     try:
+            #         # Attempt to read some bytes (e.g., a large enough size to clear the buffer)
+            #         sock.recv(4096)
+            #     except BlockingIOError:
+            #         # No more data to read from the buffer
+            #         break
+
+            # sock.setblocking(True)  # Optionally, set it back to blocking mode if needed
+
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
@@ -63,4 +79,4 @@ if __name__ == '__main__':
 
     # Run the Flask app
     # Mac uses port 5000 hence the change.
-    socketio.run(app, port=5001, debug=True)
+    socketio.run(app, port=30001, debug=True, use_reloader=False)
