@@ -62,4 +62,5 @@ if __name__ == '__main__':
     data_thread.start()
 
     # Run the Flask app
-    socketio.run(app, debug=True)
+    # Mac uses port 5000 hence the change.
+    socketio.run(app, port=5001, debug=True)

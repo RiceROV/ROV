@@ -155,24 +155,31 @@ camera.lookAt(0, 0, 0);
 
 // GET SENSOR DATA FOR ROTATION
 
-function fetchIMUDataAndUpdateROV() {
-    fetch('http://localhost:5000/getdata')
-        .then(response => response.json())
-        .then(data => {
-            if (data && rov) {
-                // Assuming the data contains yaw, roll, and pitch in degrees
-                const yaw = THREE.MathUtils.degToRad(data.yaw);
-                const roll = THREE.MathUtils.degToRad(data.roll);
-                const pitch = THREE.MathUtils.degToRad(data.pitch);
+function initSocketConnection() {
+    var socket = io.connect('http://localhost:5001');
 
-                // Apply rotation to the ROV model
-                // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
-                // You might need to adjust the order or the axes depending on how your IMU data is oriented.
-                rov.rotation.set(pitch, yaw, roll);
-            }
-        })
-        .catch(error => console.error('Error fetching IMU data:', error));
+    socket.on('connect', function() {
+        console.log('WebSocket connected!');
+    });
+
+    // Listen for 'sensor_data' events from the server
+    socket.on('sensor_data', function(data) {
+        console.log('Received sensor data:', data);
+
+        if (data && rov) {
+            // Assuming the data contains yaw, roll, and pitch in degrees
+            const yaw = THREE.MathUtils.degToRad(data.yaw);
+            const roll = THREE.MathUtils.degToRad(data.roll);
+            const pitch = THREE.MathUtils.degToRad(data.pitch);
+
+            // Apply rotation to the ROV model
+            // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
+            // You might need to adjust the order or the axes depending on how your IMU data is oriented.
+            rov.rotation.set(pitch, yaw, roll);
+        }
+    });
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                            //
@@ -265,6 +272,6 @@ window.onload = function() {
 };
 document.getElementById('nav').addEventListener("keydown", onDocumentKeyDown, false);
 
-// Call fetchIMUDataAndUpdateROV at regular intervals
-setInterval(fetchIMUDataAndUpdateROV, 1000); // Update every 1 second
+// Call this function once to set up the WebSocket connection and event listeners
+initSocketConnection();
 animate()
