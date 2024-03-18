@@ -8,34 +8,55 @@ document.addEventListener('DOMContentLoaded', (event) => {
     pitch = 0;
 
     // Uncomment for Socket Connect
-    // var socket = io.connect('http://localhost:30001');
+    var socket = io.connect('http://localhost:30001');
 
-    // socket.on('connect', function() {
-    //     console.log('WebSocket connected!');
-    // });
+    socket.on('connect', function() {
+        console.log('WebSocket connected!');
+    });
     
-    // // Listen for 'sensor_data' events from the server
-    // socket.on('sensor_data', function(data) {
-    //     console.log('Received sensor data:', data);
+    // Listen for 'sensor_data' events from the server
+    socket.on('sensor_data', function(data) {
+        console.log('Received sensor data:', data);
     
-    //     // Update the dashboard with the received data
-    //     document.getElementById('yawData').textContent = data.yaw.toFixed(8);
-    //     document.getElementById('rollData').textContent = data.roll.toFixed(8);
-    //     document.getElementById('pitchData').textContent = data.pitch.toFixed(8);
-    
-    //     // Update the graph with the new data
-    //     updateGraph(chart, data.yaw, data.roll, data.pitch);
-    // });
+        // Update the dashboard with the received data
+        document.getElementById('yawData').textContent = data.yaw.toFixed(8);
+        document.getElementById('rollData').textContent = data.roll.toFixed(8);
+        document.getElementById('rollControl').textContent = data.rollControl.toFixed(8);
+        document.getElementById('pitchControl').textContent = data.pitchControl.toFixed(8);
+        document.getElementById('pitchData').textContent = data.pitch.toFixed(8);
+        document.getElementById('depth').textContent = data.depth.toFixed(8);
+        document.getElementById('depthSet').textContent = data.depthSet.toFixed(8);
+        document.getElementById('depthControl').textContent = data.depthControl.toFixed(8);
+        document.getElementById('cpu').textContent = data.cpu.toFixed(8);
+        document.getElementById('water').textContent = data.water.toFixed(8);
+        document.getElementById('thruster1').textContent = data.thruster1.toFixed(8);
+        document.getElementById('thruster2').textContent = data.thruster2.toFixed(8);
+        document.getElementById('thruster3').textContent = data.thruster3.toFixed(8);
+        document.getElementById('thruster4').textContent = data.thruster4.toFixed(8);
+        document.getElementById('thruster5').textContent = data.thruster5.toFixed(8);
+        document.getElementById('thruster6').textContent = data.thruster6.toFixed(8);
+        document.getElementById('bcd1').textContent = data.bcd1.toFixed(8);
+        document.getElementById('bcd2').textContent = data.bcd2.toFixed(8);
+        document.getElementById('bcd3').textContent = data.bcd3.toFixed(8);
+        document.getElementById('bcd4').textContent = data.bcd4.toFixed(8);
+        document.getElementById('bcd1Volt').textContent = data.bcd1Volt.toFixed(8);
+        document.getElementById('bcd2Volt').textContent = data.bcd2Volt.toFixed(8);
+        document.getElementById('bcd3Volt').textContent = data.bcd3Volt.toFixed(8);
+        document.getElementById('bcd4Volt').textContent = data.bcd4Volt.toFixed(8);
+
+        // Update the graph with the new data
+        // updateGraph(chart, data.yaw, data.roll, data.pitch);
+    });
 
     // Set interval to update every second (1000 milliseconds)
     
-    // Uncomment for BCD Thruster stuff
+    // Uncomment for BCD Thruster stuff - BROKEN  RIGHT NOW
     // setInterval(updateAllDevices, 1000);
 
     // Update interval to be set correctly
-    setInterval(function() {
-        updateGraph(liveChart, 0, 100, 0); // Pass the chart object and other necessary values here
-    }, 1000);
+    // setInterval(function() {
+    //     updateGraph(liveChart, 0, 100, 0); // Pass the chart object and other necessary values here
+    // }, 1000);
 });
 
 function getNewDataGraphs() {
