@@ -1,75 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive Design -->
-    <title>BayMax Pro - ROV Dashboard</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Updated CSS file -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BayMax Pro - ROV Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'SF Pro Display', sans-serif;
+      background-color: #f2f2f7;
+      color: #1d1d1f;
+      margin: 0;
+      padding: 20px;
+    }
 
+    h1 {
+      font-size: 28px;
+      margin: 0 0 20px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .box {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 0;
+    }
+    
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .data-item {
+      background-color: #f2f2f7;
+      padding: 10px;
+      border-radius: 8px;
+    } 
+    
+    .data-item h3 {
+      font-size: 16px;
+      margin: 0 0 6px;
+      font-weight: bold;
+    }
+
+    .data-item-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .data-item-row .control-label {
+        margin-left: 10px; /* Adjust as needed */
+    }
+
+
+    .data-value {
+      font-size: 20px;
+    }
+
+    #dataGraphs {
+      width: 100%;
+      height: 100%;
+    }
+
+    #nav {
+      width: 100%;
+      height: 250px;
+      background-color: #f2f2f7;
+      border-radius: 12px;
+    }
+
+    /* Add Flexbox or Grid layout to the container holding the title to align items closer */
+    .header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px; /* Or any small value to keep content from touching the edges */
+    }
+
+  </style>
 </head>
+<body>
+    <div class="header-container">
+        <h1>BayMax Pro - ROV Dashboard</h1>
+      </div>
+  
+  <div class="dashboard">
+    <div class="box">
+        <h2>Core System Information</h2>
+        <div class="data-grid">
+          <div class="data-item orientation">
+            <h3>Orientation</h3>
+            <p>Yaw: <span id="yawData" class="data-value">--</span></p>
+            <p class="data-item-row">Roll: <span id="rollData" class="data-value actual">Actual: --</span>
+                <span id="rollControl" class="data-value control control-label">Control: --</span>
+              </p>
+              <p class="data-item-row">Pitch: <span id="pitchData" class="data-value actual">Actual: --</span>
+                <span id="pitchControl" class="data-value control control-label">Control: --</span>
+              </p>
+          </div>
+          <div class="data-item depth">
+            <h3>Depth Information</h3>
+            <p>Depth: <span id="depth" class="data-value">--</span></p>
+            <p>Depth Setpoint: <span id="depthSet" class="data-value">--</span></p>
+            <p>Depth Control Value: <span id="depthControl" class="data-value">--</span></p>
+            <h3>System Health</h3>
+            <p>CPU Temperature: <span id="cpu" class="data-value">--</span></p>
+            <p>Water Level: <span id="water" class="data-value">--</span></p>
+          </div>
+          <div class="data-item thruster">
+            <h3>Thruster Performance</h3>
+            <p>Thruster Speeds: T1 <span id="thruster1" class="data-value">--</span>, T2 <span id="thruster2" class="data-value">--</span>, T3 <span id="thruster3" class="data-value">--</span>, T4 <span id="thruster4" class="data-value">--</span>, T5 <span id="thruster5" class="data-value">--</span>, T6 <span id="thruster6" class="data-value">--</span></p>
+            <h3>Battery Cell Data</h3>
+            <p>BCD States: B1 <span id="bcd1" class="data-value">--</span>, B2 <span id="bcd2" class="data-value">--</span>, B3 <span id="bcd3" class="data-value">--</span>, B4 <span id="bcd4" class="data-value">--</span></p>
+            <p>BCD Voltages: B1 <span id="bcd1Volt" class="data-value">--</span>, B2 <span id="bcd2Volt" class="data-value">--</span>, B3 <span id="bcd3Volt" class="data-value">--</span>, B4 <span id="bcd4Volt" class="data-value">--</span></p>
+          </div>
+        </div>
+      </div>
+      
 
-<body role="application">
-    <header role="banner">
-        <h1 class="title">BayMax Pro - ROV Dashboard</h1>
-    </header>
+
+    <div class="box">  
+      <h2>Graphs</h2>
+      <div id="dataGraphs"></div>
+    </div>
     
-    <main role="main" class="container-fluid">
-        <section class="row" role="region" aria-labelledby="core-system">
-            <div class="col-md-6 box" id="core-system">
-                <h3>Core System Information</h3>
-                <p id="rovStatus">ROV Status FAKE: <span class="status-white">Operating</span></p>
-                <p id="batteryLevel">Battery Level FAKE: <span class="status-green">80%</span></p>
-                <p id="depthGauge">Depth FAKE: <span class="status-blue">30m</span></p>
-            </div>
-            
-            <div class="col-md-6 box" id="environmental-data">
-                <h3>Sensor Data</h3>
-                <p id="sensorTemp">Sensor Temperature: <span class="status-black">--°C</span></p>
-                <p id="accelData">Accelerometer Data: X <span class="status-black">--</span>, Y <span class="status-black">--</span>, Z <span class="status-black">--</span></p>
-                <p id="gyroData">Gyroscope Data: X <span class="status-black">--</span>, Y <span class="status-black">--</span>, Z <span class="status-black">--</span></p>
-                <!-- Add new sensor data elements here -->
-                <p>Yaw: <span id="yawData" class="status-black">--</span></p>
-                <p>Roll: <span id="rollData" class="status-black">--</span></p>
-                <p>Pitch: <span id="pitchData" class="status-black">--</span></p>
-                <p>BCD States: 
-                    B1 <span id="bcdData1">--</span>,
-                    B2 <span id="bcdData2">--</span>,
-                    B3 <span id="bcdData3">--</span>,
-                    B4 <span id="bcdData4">--</span>
-                </p>
-                <p>Thruster Speeds: 
-                    T1 <span id="thrusterData1">--</span>,
-                    T2 <span id="thrusterData2">--</span>,
-                    T3 <span id="thrusterData3">--</span>,
-                    T4 <span id="thrusterData4">--</span>,
-                    T5 <span id="thrusterData5">--</span>,
-                    T6 <span id="thrusterData6">--</span>
-                </p>
-            </div>            
-        </section>
-        
-        <section class="row" role="region" aria-labelledby="navigation-identification">
-            <div class="col-md-6 box" id="navigation-identification">
-                <h3>Simulation</h3>
-                <canvas id="nav" tabindex="0" style="width: 50%; height: 400px;"></canvas>
-                <!-- This Script below renders the Simulation. -->
-                <script type="module" src="/simRender.js"></script>            
-            </div>
-            
-            <div class="col-md-6 box" id="data-graphs">
-                <h3>Data Graphs</h3>
-                <div id="dataGraphs"></div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- This Script below updates the dashboard. -->
-    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
-    <script src="dashUpdate.js"></script>
+    <div class="box" id="navigation-identification">
+        <h2>Simulation</h2>
+        <canvas id="nav" tabindex="0"></canvas>
+        <script type="module" src="/simRender.js"></script>            
+    </div>
+
+    <div class="box">
+      <h2>Top Down View</h2>
+      <div id="top-down"></div> 
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/p5@1.9.1/lib/p5.js"></script> -->
+  <script src="dashUpdate.js"></script>
 </body>
-
 </html>

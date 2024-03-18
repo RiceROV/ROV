@@ -1,39 +1,41 @@
-
-
-// Need to replace with RPI ethernet static IP
-// Right now this is set to RPI IP when on Rice Visitor Network
-// Seems to be UNNEEDED now as Sensor Data is transmitting from Matlab
-// const RASPBERRY_PI_IP = '168.5.140.178';
-
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const dataGraphs = document.getElementById('dataGraphs');
     const { div, chart } = getNewDataGraphs(); // Fetch new graphs at startup
     dataGraphs.appendChild(div); // Append new graphs
-    
+    liveChart = chart;
     yaw = 0;
     roll = 0;
     pitch = 0;
 
-    var socket = io.connect('http://localhost:30001');
+    // Uncomment for Socket Connect
+    // var socket = io.connect('http://localhost:30001');
 
-    socket.on('connect', function() {
-        console.log('WebSocket connected!');
-    });
+    // socket.on('connect', function() {
+    //     console.log('WebSocket connected!');
+    // });
     
-    // Listen for 'sensor_data' events from the server
-    socket.on('sensor_data', function(data) {
-        console.log('Received sensor data:', data);
+    // // Listen for 'sensor_data' events from the server
+    // socket.on('sensor_data', function(data) {
+    //     console.log('Received sensor data:', data);
     
-        // Update the dashboard with the received data
-        document.getElementById('yawData').textContent = data.yaw.toFixed(8);
-        document.getElementById('rollData').textContent = data.roll.toFixed(8);
-        document.getElementById('pitchData').textContent = data.pitch.toFixed(8);
+    //     // Update the dashboard with the received data
+    //     document.getElementById('yawData').textContent = data.yaw.toFixed(8);
+    //     document.getElementById('rollData').textContent = data.roll.toFixed(8);
+    //     document.getElementById('pitchData').textContent = data.pitch.toFixed(8);
     
-        // Update the graph with the new data
-        updateGraph(chart, data.yaw, data.roll, data.pitch);
-    });
+    //     // Update the graph with the new data
+    //     updateGraph(chart, data.yaw, data.roll, data.pitch);
+    // });
 
+    // Set interval to update every second (1000 milliseconds)
+    
+    // Uncomment for BCD Thruster stuff
+    // setInterval(updateAllDevices, 1000);
+
+    // Update interval to be set correctly
+    setInterval(function() {
+        updateGraph(liveChart, 0, 100, 0); // Pass the chart object and other necessary values here
+    }, 1000);
 });
 
 function getNewDataGraphs() {
@@ -109,14 +111,14 @@ function getNewDataGraphs() {
 function updateGraph(chart, yaw, roll, pitch) {
     try {
         // Uncomment to simulate new sensor data
-        // const newDepth = Math.random() * 100; // Replace with actual depth sensor data
-        // const newTemp = Math.random() * 30; // Replace with actual temperature sensor data
+        const newDepth = Math.random() * 100; // Replace with actual depth sensor data
+        const newTemp = Math.random() * 30; // Replace with actual temperature sensor data
         const newTime = chart.data.labels.length + 1; // Simulating time in seconds
 
         // Update the graph with new data points
         chart.data.labels.push(newTime);
-        // chart.data.datasets[0].data.push(newDepth);
-        // chart.data.datasets[1].data.push(newTemp);
+        chart.data.datasets[0].data.push(newDepth);
+        chart.data.datasets[1].data.push(newTemp);
         chart.data.datasets[2].data.push(yaw);
         chart.data.datasets[3].data.push(roll);
         chart.data.datasets[4].data.push(pitch);
@@ -125,3 +127,57 @@ function updateGraph(chart, yaw, roll, pitch) {
         console.error('Error updating graph:', error);
     }
 }
+
+
+// Uncomment FOR BCD / THRUSTER
+
+// function updateOutput(deviceId, output) {
+//     const outputBar = document.getElementById(`output-${deviceId}`);
+//     if (output >= 0) {
+//         outputBar.style.backgroundColor = "green";
+//         outputBar.style.height = `${Math.abs(output) / 100 * 50}px`; // Adjust based on your range
+//         outputBar.style.bottom = "50%";
+//     } else {
+//         outputBar.style.backgroundColor = "red";
+//         outputBar.style.height = `${Math.abs(output) / 100 * 50}px`;
+//         outputBar.style.top = "50%";
+//     }
+// }
+
+// function updateVoltage(deviceId, voltage) {
+//     const voltageDisplay = document.getElementById(`voltage-${deviceId}`);
+//     voltageDisplay.innerText = `${voltage}V`;
+// }
+
+// function generateRandomBCDOutput() {
+//     // Generates -1, 0, or 1 for BCDs
+//     return Math.floor(Math.random() * 3) - 1;
+// }
+
+// function generateRandomThrusterOutput() {
+//     // Generates a random number between -32000 and 32000 for thrusters
+//     return Math.floor(Math.random() * (32000 - (-32000) + 1)) + (-32000);
+// }
+
+// function generateRandomVoltage() {
+//     // Generates a random voltage between 0V and 24V
+//     return Math.floor(Math.random() * 25); // 0 to 24
+// }
+
+// function updateAllDevices() {
+//     // Update BCDs
+//     for (let i = 1; i <= 4; i++) { // Assuming 4 BCDs
+//         const bcdOutput = generateRandomBCDOutput();
+//         updateOutput(`bcd${i}`, bcdOutput);
+//         updateVoltage(`bcd${i}`, generateRandomVoltage());
+//     }
+
+//     // Update Thrusters
+//     for (let i = 1; i <= 6; i++) { // Assuming 6 Thrusters
+//         const thrusterOutput = generateRandomThrusterOutput();
+//         updateOutput(`thruster${i}`, thrusterOutput);
+//         updateVoltage(`thruster${i}`, generateRandomVoltage());
+//     }
+// }
+
+

@@ -43,12 +43,48 @@ h3 {
   margin-bottom: 15px;
 }
 
-p {
-  font-size: 1.2em;
-  line-height: 1.6em;
-  font-weight: 400;
-  color: #E9C46A; /* Yellow Text */
+.status-actual {
+  color: #007bff; /* Blue color for actual values */
 }
+
+.status-control {
+  color: #28a745; /* Green color for control values */
+}
+
+/* General Styles */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+h2, h3 {
+  font-weight: 700;
+  color: #007bff;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.data-value {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+/* Specific Styles */
+.actual {
+  color: #007bff; /* Blue color for actual values */
+}
+
+.control {
+  color: #28a745; /* Green color for control values */
+}
+
 
 #controls input {
   margin: 10px;
@@ -95,3 +131,45 @@ p {
   align-items: center;     /* Vertically center content */
   height: 100%;            /* Take full height of the parent */
 }
+
+
+/* For Top Down View */
+.bcd-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px; /* Adjust the padding as needed */
+}
+
+.bcd-container .bcd {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: red;
+  position: relative; /* Set position to relative for positioning output bars and voltage */
+}
+
+.thruster-container {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.thruster-container .thruster {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: blue;
+  display: inline-block; /* Align them in a row */
+  margin: 0 10px; /* Adjust spacing between thrusters */
+}
+
+/* Additional styles for output bars and voltage indicators */
+/* ... */

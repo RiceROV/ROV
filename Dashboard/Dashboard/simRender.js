@@ -17,7 +17,8 @@ let rov;
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB); // Sky blue color
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+// Initialize camera with a smaller FOV to zoom in
+const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000); // Decrease FOV to zoom in
 const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#nav'),
     antialias: true
@@ -25,15 +26,29 @@ const renderer = new THREE.WebGLRenderer({
 
 const canvas = document.querySelector('#nav');
 const width = canvas.clientWidth;
-const height = canvas.clientHeight;
+const heightMagic = 25
+const height = canvas.clientHeight - heightMagic; // Adjust the height to leave space for the dashboard
 
-renderer.setPixelRatio( window.devicePixelRatio);
-renderer.setSize( width*2, window.innerHeight);
-camera.position.setZ(30);
-
-renderer.render(width, height)
+// Initial setup for renderer size based on the canvas client size
+renderer.setSize(width, height); // The third parameter `false` tells the renderer to not set the canvas size style, only the drawing buffer size.
 camera.aspect = width / height;
 camera.updateProjectionMatrix();
+
+// Add an event listener for window resize to adjust the canvas and renderer size
+window.addEventListener('resize', () => {
+    // Update sizes based on the canvas's client size
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight - heightMagic;
+
+    // Update renderer and camera
+    renderer.setSize(width, height, false); // Adjust drawing buffer size without changing the style
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+});
+
+// Make sure the initial render call uses the updated size
+renderer.render(scene, camera);
 
 //
 // Set up lighting
@@ -135,10 +150,10 @@ controls.dampingFactor = 0.05;
 controls.screenSpacePanning = false;
 
 // Camera position
-camera.position.z = 10;
-camera.position.y = 20;
-camera.position.x = 20;
-camera.lookAt(0, 0, 0);
+// camera.position.z = 15;  // Decreased from 10
+// camera.position.y = -5;  // Decreased from 20
+// camera.position.x = -5;  // Decreased from 20
+// camera.lookAt(0, 0, 0);
 
 
 // Currently not working
@@ -187,9 +202,12 @@ function initSocketConnection() {
 //                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const xMagic = 10; // Adjust these values as needed
+const yMagic = 10; // Adjust these values as needed
+const zMagic = 2; // Adjust these values as needed
+const magic = 5;
 function animate() {
     requestAnimationFrame(animate)
-    let magic = 5
     // Check if camera is below 'water level' (assuming water level is y=0)
     if (camera.position.y < 0) {
         // Underwater settings
@@ -208,10 +226,10 @@ function animate() {
     // Make the camera follow the ROV from a greater distance
     if (autoFollow && rov) {
         const distance = 30; // Increase this value to zoom out
-        camera.position.x = rov.position.x + distance;
-        camera.position.y = rov.position.y + distance / 2; // Adjust Y position for a better angle
-        camera.position.z = rov.position.z + distance;
-        camera.lookAt(rov.position);
+        camera.position.x = rov.position.x + distance + xMagic;
+        camera.position.y = rov.position.y + distance / 2 + yMagic; // Adjust Y position for a better angle
+        camera.position.z = rov.position.z + distance + zMagic;
+        camera.lookAt(rov.position.x + xMagic + magic, rov.position.y + yMagic + magic, rov.position.z + zMagic + magic);
     }
 
     renderer.render(scene, camera)
