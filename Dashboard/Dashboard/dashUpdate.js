@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // }, 1000);
 });
 
-function getNewDataGraphs(width = 700, height = 350) {
+function getNewDataGraphs(width = 700, height = 320) {
     const div = document.createElement('div');
     div.style.width = width + 'px'; // Set width
     div.style.height = height + 'px'; // Set height
