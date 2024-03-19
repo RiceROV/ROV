@@ -53,7 +53,7 @@ class Thruster {
 
     // Fill rectangle based on value
     noStroke();
-    let fillHeight = map(abs(this.value), 0, 32000, 0, 50);
+    let fillHeight = map(abs(this.value), 0, 1, 0, 50);
     if (this.value > 0) {
       fill(0, 255, 0); // Green for positive
       rect(this.x - radius - 30, this.y - fillHeight, 20, fillHeight);
