@@ -126,7 +126,7 @@ let thrusters = [];
 let bcds = [];
 
 function setup() {
-  width = 800
+  width = 700
   height = 600
   let canvas = createCanvas(width, height);
   canvas.parent('top-down'); // Attach the canvas to the 'top-down' div

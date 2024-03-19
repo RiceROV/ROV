@@ -26,7 +26,7 @@ const renderer = new THREE.WebGLRenderer({
 
 const canvas = document.querySelector('#nav');
 const width = canvas.clientWidth;
-const heightMagic = 25
+const heightMagic = -200
 const height = canvas.clientHeight - heightMagic; // Adjust the height to leave space for the dashboard
 
 // Initial setup for renderer size based on the canvas client size
@@ -186,11 +186,13 @@ function initSocketConnection() {
             const yaw = THREE.MathUtils.degToRad(data.yaw);
             const roll = THREE.MathUtils.degToRad(data.roll);
             const pitch = THREE.MathUtils.degToRad(data.pitch);
+            const depth = data.depth;
 
             // Apply rotation to the ROV model
             // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
             // You might need to adjust the order or the axes depending on how your IMU data is oriented.
             rov.rotation.set(pitch, yaw, roll);
+            rov.position.y = -depth; // Adjust the depth based on the sensor data
         }
     });
 }
@@ -204,7 +206,7 @@ function initSocketConnection() {
 
 const xMagic = 10; // Adjust these values as needed
 const yMagic = 10; // Adjust these values as needed
-const zMagic = 2; // Adjust these values as needed
+const zMagic = -1.3; // Adjust these values as needed
 const magic = 5;
 function animate() {
     requestAnimationFrame(animate)
