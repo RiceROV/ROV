@@ -4,16 +4,16 @@ class Thruster {
     this.value = 0;
 
     // Hardcoded positions based on ID
-    let spacingX = width / 8;
-    let spacingY = height / 4;
+    let spacingX = width / 6;
+    let spacingY = height / 6; // Adjusted spacing to move objects higher
     
     // Calculate positions based on ID
     if (id === 1 || id === 2) {
       this.y = spacingY; // Top row
     } else if (id === 5 || id === 6) {
-      this.y = spacingY * 2; // Middle row
+      this.y = spacingY * 2.5; // Middle row (adjusted multiplier)
     } else {
-      this.y = spacingY * 3; // Bottom row
+      this.y = spacingY * 4; // Bottom row (adjusted multiplier)
     }
 
     if (id === 2 || id === 5 || id === 4) {
@@ -73,8 +73,8 @@ class BCD {
     this.id = id;
     this.mode = 0; // Initial mode set to 0
     // Assign x and y based on the specific BCD positions required
-    this.x = id === 1 || id === 2 ? width / 2 - width / 8 * 2 : width / 2 + width / 8 * 2; // Left for 1 and 2, right for 3 and 4
-    this.y = id === 1 || id === 4 ? height / 6 : height * 5 / 6; // Top for 1 and 4, bottom for 2 and 3
+    this.x = id === 1 || id === 2 ? width / 2 - width / 6 * 2 : width / 2 + width / 6 * 2; // Left for 1 and 2, right for 3 and 4
+    this.y = id === 1 || id === 4 ? 3/5 * height / 8 : height * 6 / 8; // Adjusted positions for top and bottom BCDs
     this.voltage = 0;
   }
 
@@ -126,10 +126,12 @@ let thrusters = [];
 let bcds = [];
 
 function setup() {
-  width = 700
-  height = 600
+  width = 800
+  height = 480
   let canvas = createCanvas(width, height);
   canvas.parent('top-down'); // Attach the canvas to the 'top-down' div
+  // canvas.class('canvas-border'); // Add a CSS class to the canvas element
+
   textAlign(CENTER, CENTER);
   frameRate(10);
 

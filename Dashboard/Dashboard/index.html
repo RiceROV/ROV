@@ -11,151 +11,185 @@
       background-color: #f2f2f7;
       color: #1d1d1f;
       margin: 0;
-      padding: 20px;
+      padding: 10px;
+      height: 100vh;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 28px;
-      margin: 0 0 20px;
+      font-size: 40px;
+      margin: 0 0 10px;
     }
 
     .dashboard {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      grid-template-rows: auto 1fr;
+      gap: 10px;
+      height: calc(100vh - 40px);
     }
+
+    .canvas-border {
+    border: 2px solid black; /* Adjust the border style, width, and color as desired */
+  }
 
     .box {
       background-color: #fff;
       border-radius: 12px;
-      padding: 15px;
+      padding: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      /*make max height 370 px but set to 350*/
+      height: 360px;
+      /* Set a maximum height, e.g., 90% of the viewport height */
+    }
+
+    .box2 {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .box3 {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
     }
 
     h2 {
-      font-size: 20px;
+      font-size: 26px;
       font-weight: 600;
       margin-top: 0;
+    }
+
+    .dg h2 {
+        margin-bottom: -40px; /* Decrease the value */
+        margin-top: 0; /* Remove any top margin */
     }
     
     .data-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 8px;
     }
 
     .data-item {
       background-color: #f2f2f7;
-      padding: 10px;
+      padding: 6px;
       border-radius: 8px;
     } 
     
     .data-item h3 {
-      font-size: 16px;
-      margin: 0 0 6px;
+      font-size: 20px;
+      margin: 0 0 2px;
       font-weight: bold;
     }
 
-    .data-item-row {
-        display: flex;
-        align-items: center;
-    }
+    /* .data-item-row {
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+    } */
 
-    .data-item-row .control-label {
-        margin-left: 10px; /* Adjust as needed */
-    }
-
+    /* .data-item-row .control-label {
+      margin-left: 6px;
+      font-size: 15px;
+    } */
 
     .data-value {
-      font-size: 20px;
+      font-size: 15px;
     }
 
     #dataGraphs {
-      width: 100%;
-      height: 100%;
-    }
+  display: flex;       /* Enable Flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  height: 100%;        /* Adjust based on your requirement */
+  margin-top: 0px;
+}
 
-    #nav {
-      width: 95%;
-      height: 300px;
-      background-color: #f2f2f7;
-      border-radius: 12px;
-    }
-
-    /* Add Flexbox or Grid layout to the container holding the title to align items closer */
     .header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0px; /* Or any small value to keep content from touching the edges */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
+
 
   </style>
 </head>
 <body>
-    <div class="header-container">
-        <h1>BayMax Pro - ROV Dashboard</h1>
-      </div>
+  <div class="header-container">
+    <h1>BayMax Pro - ROV Dashboard</h1>
+  </div>
   
   <div class="dashboard">
     <div class="box">
-        <h2>Core System Information</h2>
-        <div class="data-grid">
-          <div class="data-item orientation">
-            <h3>Orientation</h3>
-            <p>Yaw: <span id="yawData" class="data-value">--</span></p>
-            <p class="data-item-row">Roll: <span id="rollData" class="data-value actual">Actual: --</span>
-                <span id="rollControl" class="data-value control control-label">Control: --</span>
-              </p>
-              <p class="data-item-row">Pitch: <span id="pitchData" class="data-value actual">Actual: --</span>
-                <span id="pitchControl" class="data-value control control-label">Control: --</span>
-              </p>
-          </div>
-          <div class="data-item depth">
-            <h3>Depth Information</h3>
-            <p>Depth: <span id="depth" class="data-value">--</span></p>
-            <p>Depth Setpoint: <span id="depthSet" class="data-value">--</span></p>
-            <p>Depth Control Value: <span id="depthControl" class="data-value">--</span></p>
-            <h3>System Health</h3>
-            <p>CPU Temperature: <span id="cpu" class="data-value">--</span></p>
-            <p>Water Level: <span id="water" class="data-value">--</span></p>
-          </div>
-          <div class="data-item thruster">
-            <h3>Thruster Performance</h3>
-            <p>Thruster Speeds: T1 <span id="thruster1" class="data-value">--</span>, T2 <span id="thruster2" class="data-value">--</span>, T3 <span id="thruster3" class="data-value">--</span>, T4 <span id="thruster4" class="data-value">--</span>, T5 <span id="thruster5" class="data-value">--</span>, T6 <span id="thruster6" class="data-value">--</span></p>
-            <h3>Battery Cell Data</h3>
-            <p>BCD States: B1 <span id="bcd1" class="data-value">--</span>, B2 <span id="bcd2" class="data-value">--</span>, B3 <span id="bcd3" class="data-value">--</span>, B4 <span id="bcd4" class="data-value">--</span></p>
-            <p>BCD Voltages: B1 <span id="bcd1Volt" class="data-value">--</span>, B2 <span id="bcd2Volt" class="data-value">--</span>, B3 <span id="bcd3Volt" class="data-value">--</span>, B4 <span id="bcd4Volt" class="data-value">--</span></p>
-          </div>
+      <h2>Core System Information</h2>
+      <div class="data-grid">
+        <div class="data-item orientation">
+          <h3>Orientation</h3>
+          <p class="data-value">Yaw: <span id="yawData" class="data-value">--</span></p>
+          <p class="data-value">Roll: <span id="rollData" class="data-value actual">Actual: --</span>
+            <span id="rollControl" class="data-value control control-label">Control: --</span>
+          </p>
+          <p class="data-value">Pitch: <span id="pitchData" class="data-value actual">Actual: --</span>
+            <span id="pitchControl" class="data-value control control-label">Control: --</span>
+          </p>
+        </div>
+        <div class="data-item depth">
+          <h3>Depth Information</h3>
+          <p class="data-value">Depth: <span id="depth" class="data-value">--</span></p>
+          <p class="data-value">Depth Setpoint: <span id="depthSet" class="data-value">--</span></p>
+          <p class="data-value">Depth Control Value: <span id="depthControl" class="data-value">--</span></p>
+          <h3>System Health</h3>
+          <p class="data-value">CPU Temperature: <span id="cpu" class="data-value">--</span></p>
+          <p class="data-value">Water Level: <span id="water" class="data-value">--</span></p>
+        </div>
+        <div class="data-item thruster">
+          <h3>Thruster Performance</h3>
+          <p class="data-value">Thruster Speeds: T1 <span id="thruster1" class="data-value">--</span>, T2 <span id="thruster2" class="data-value">--</span>, T3 <span id="thruster3" class="data-value">--</span>, T4 <span id="thruster4" class="data-value">--</span>, T5 <span id="thruster5" class="data-value">--</span>, T6 <span id="thruster6" class="data-value">--</span></p>
+          <h3>Buoyancy Control</h3>
+          <p class="data-value">BCD States: B1 <span id="bcd1" class="data-value">--</span>, B2 <span id="bcd2" class="data-value">--</span>, B3 <span id="bcd3" class="data-value">--</span>, B4 <span id="bcd4" class="data-value">--</span></p>
+          <p class="data-value">BCD Voltages: B1 <span id="bcd1Volt" class="data-value">--</span>, B2 <span id="bcd2Volt" class="data-value">--</span>, B3 <span id="bcd3Volt" class="data-value">--</span>, B4 <span id="bcd4Volt" class="data-value">--</span></p>
         </div>
       </div>
-      
-
-
-    <div class="box">  
-      <h2>Graphs</h2>
-      <div id="dataGraphs"></div>
     </div>
+
+    <div class="box dg">  
+        <h2>Graphs</h2>
+        <div id="dataGraphs"></div>
+      </div>
+
+    <div class="box2">
+        <h2>Top Down View</h2>
+        <div class="canvas-container" id="top-down"></div> 
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.9.1/lib/p5.js"></script>
+        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+        <script src="./sketch.js"></script>
+      </div>
+
+    <div class="box3" id="navigation-identification">
+      <h2>Simulation</h2>
+        <div class="canvas-container2">
+            <canvas id="nav" tabindex="0"></canvas>
+        </div>
+      <script type="module" src="/simRender.js"></script>            
+    </div>
+
     
-    <div class="box" id="navigation-identification">
-        <h2>Simulation</h2>
-        <canvas id="nav" tabindex="0"></canvas>
-        <script type="module" src="/simRender.js"></script>            
-    </div>
-
-    <div class="box">
-      <h2>Top Down View</h2>
-      <div id="top-down"></div> 
-      <script src="https://cdn.jsdelivr.net/npm/p5@1.9.1/lib/p5.js"></script>
-      <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
-      <script src="./sketch.js"></script>
-    </div>
   </div>
 
   <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.1/lib/p5.js"></script>
   <script src="dashUpdate.js"></script>
 </body>
 </html>
