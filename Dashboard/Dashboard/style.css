@@ -35,7 +35,7 @@ body {
   background-color: #ffffff; /* Box Background */
   box-shadow: 0px 4px 6px #000000; /* Box shadow for 3D effect */
   transition: transform .2s; /* Transition effect for transform */
-  height: 90%
+  height: 88%
 }
 
 .box3 {
@@ -46,7 +46,7 @@ body {
   background-color: #ffffff; /* Box Background */
   box-shadow: 0px 4px 6px #000000; /* Box shadow for 3D effect */
   transition: transform .2s; /* Transition effect for transform */
-  height: 90%
+  height: 88%
 }
 
 .canvas-container {
