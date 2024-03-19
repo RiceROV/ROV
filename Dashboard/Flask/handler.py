@@ -37,9 +37,10 @@ def fetch_and_emit_data():
         sock.connect((server_address, server_port))
         
         while True:
+            print("starting")
             # Receive data
-            data = sock.recv(144)  # Assuming we're reading exactly 6 bytes for 24 int16 values
-            
+            data = sock.recv(192)  # Assuming we're reading exactly 6 bytes for 24 int16 values
+            print("\n\n")
             # constant test int16s
             # data = b'\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00'
             if data:
@@ -85,17 +86,17 @@ def fetch_and_emit_data():
                 
             time.sleep(.05)  # Adjust sleep time as needed
 
-            # sock.setblocking(False)  # Set socket to non-blocking mode
+            sock.setblocking(False)  # Set socket to non-blocking mode
 
-            # while True:
-            #     try:
-            #         # Attempt to read some bytes (e.g., a large enough size to clear the buffer)
-            #         sock.recv(4096)
-            #     except BlockingIOError:
-            #         # No more data to read from the buffer
-            #         break
+            while True:
+                try:
+                    # Attempt to read some bytes (e.g., a large enough size to clear the buffer)
+                    sock.recv(4096)
+                except BlockingIOError:
+                    # No more data to read from the buffer
+                    break
 
-            # sock.setblocking(True)  # Optionally, set it back to blocking mode if needed
+            sock.setblocking(True)  # Optionally, set it back to blocking mode if needed
 
     except Exception as e:
         print(f"An error occurred: {e}")
