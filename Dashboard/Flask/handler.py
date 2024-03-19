@@ -39,7 +39,7 @@ def fetch_and_emit_data():
         while True:
             print("starting")
             # Receive data
-            data = sock.recv(192)  # Assuming we're reading exactly 6 bytes for 24 int16 values
+            data = sock.recv(192)  # Assuming we're reading exactly 8 bytes for 24 int16 values
             print("\n\n")
             # constant test int16s
             # data = b'\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00'
