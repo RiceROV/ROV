@@ -64,7 +64,7 @@ class Thruster {
 
     // Thruster text
     fill(0);
-    text(`ID: ${this.id}\n${this.value.toFixed(0)} V`, this.x, this.y + radius + 20);
+    text(`ID: ${this.id}\n${this.value.toFixed(2)} V`, this.x, this.y + radius + 20);
   }
 }
 
