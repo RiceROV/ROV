@@ -13,6 +13,40 @@ import socket
 from flask_cors import CORS  # Import CORS
 import struct
 import time
+import datetime
+import csv
+
+# Function to get a unique log file name based on the current date and time
+def get_log_file_name():
+    now = datetime.datetime.now()
+    return f"data_log_{now.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
+
+# Initialize log file
+log_file_name = get_log_file_name()
+with open(log_file_name, 'w', newline='') as file:
+    writer = csv.writer(file)
+    # Write the header row with all data field titles
+    writer.writerow([
+        "Timestamp", "Yaw", "Pitch", "Roll", "Depth", "Depth Set", "Depth Control",
+        "Water", "Roll Control", "Pitch Control", "Thruster1", "Thruster2", "Thruster3",
+        "Thruster4", "Thruster5", "Thruster6", "BCD1", "BCD2", "BCD3", "BCD4",
+        "BCD1 Volt", "BCD2 Volt", "BCD3 Volt", "BCD4 Volt", "CPU"
+    ])
+
+def log_data(dash_data):
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open(log_file_name, 'a', newline='') as file:
+        writer = csv.writer(file)
+        # Ensure the order of data values matches the header
+        writer.writerow([now] + [
+            dash_data['yaw'], dash_data['pitch'], dash_data['roll'], dash_data['depth'],
+            dash_data['depthSet'], dash_data['depthControl'], dash_data['water'],
+            dash_data['rollControl'], dash_data['pitchControl'], dash_data['thruster1'],
+            dash_data['thruster2'], dash_data['thruster3'], dash_data['thruster4'],
+            dash_data['thruster5'], dash_data['thruster6'], dash_data['bcd1'],
+            dash_data['bcd2'], dash_data['bcd3'], dash_data['bcd4'], dash_data['bcd1Volt'],
+            dash_data['bcd2Volt'], dash_data['bcd3Volt'], dash_data['bcd4Volt'], dash_data['cpu']
+        ])
 
 app = Flask(__name__)
 CORS(app)
@@ -41,8 +75,12 @@ def fetch_and_emit_data():
             # Receive data
             data = sock.recv(192)  # Assuming we're reading exactly 8`` bytes for 24 int16 values
             print("\n\n")
-            # constant test int16s
-            # data = b'\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00\x01\x00\x02\x00\x03\x00'
+
+            # constant test data
+            # doubles = [float(i) for i in range(24)]
+            # # Packing these float values into a byte string
+            # data = struct.pack('>24d', *doubles)
+
             if data:
                 # Unpack the data. ">hhh" means 3 big-endian signed short (int16) values.
                 integers = struct.unpack('>24d', data)
@@ -76,6 +114,8 @@ def fetch_and_emit_data():
                     'bcd4Volt': int23,
                     'cpu': int24
                 }
+                
+                log_data(dash_data)
                 
                 # Iterate over the dictionary and print each key-value pair
                 print("Received int16 values:")

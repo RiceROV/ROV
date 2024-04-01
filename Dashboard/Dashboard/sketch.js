@@ -186,37 +186,36 @@ socket.on('sensor_data', function(data) {
 });
 
 // Function to generate fake data
-// function generateFakeData() {
-//   // Generate fake data for thrusters and BCDs
-//   let fakeData = {};
-//   for (let i = 1; i <= 6; i++) {
-//       fakeData[`thruster${i}`] = Math.random() * 100; // Random value between 0 and 100
-//   }
-//   for (let i = 1; i <= 4; i++) {
-//       fakeData[`bcd${i}`] = Math.floor(Math.random() * 3) - 1; // Random mode between -1, 0, and 1
-//       fakeData[`bcd${i}Volt`] = Math.random() * 10; // Random voltage between 0 and 10
-//   }
-//   return fakeData;
-// }
+function generateFakeData() {
+  // Generate fake data for thrusters and BCDs
+  let fakeData = {};
+  for (let i = 1; i <= 6; i++) {
+      fakeData[`thruster${i}`] = Math.random() * 1; // Random value between 0 and 100
+  }
+  for (let i = 1; i <= 4; i++) {
+      fakeData[`bcd${i}`] = Math.floor(Math.random() * 3) - 1; // Random mode between -1, 0, and 1
+      fakeData[`bcd${i}Volt`] = Math.random() * 10; // Random voltage between 0 and 10
+  }
+  return fakeData;
+}
 
-// // Function to update thrusters and BCDs for testing
-// function updateDevicesForTesting() {
-//   let fakeData = generateFakeData();
-//   updateDevices(fakeData);
+// Function to update thrusters and BCDs for testing
+function updateDevicesForTesting() {
+  let fakeData = generateFakeData();
+  updateDevices(fakeData);
 
-//   // Update HTML elements with fake data for visual confirmation
-//   for (let i = 1; i <= 6; i++) {
-//       document.getElementById(`thruster${i}`).textContent = fakeData[`thruster${i}`].toFixed(2);
-//   }
-//   for (let i = 1; i <= 4; i++) {
-//       document.getElementById(`bcd${i}`).textContent = fakeData[`bcd${i}`].toFixed(2);
-//       document.getElementById(`bcd${i}Volt`).textContent = fakeData[`bcd${i}Volt`].toFixed(2);
-//   }
-// }
+  // Update HTML elements with fake data for visual confirmation
+  for (let i = 1; i <= 6; i++) {
+      document.getElementById(`thruster${i}`).textContent = fakeData[`thruster${i}`].toFixed(2);
+  }
+  for (let i = 1; i <= 4; i++) {
+      document.getElementById(`bcd${i}`).textContent = fakeData[`bcd${i}`].toFixed(2);
+      document.getElementById(`bcd${i}Volt`).textContent = fakeData[`bcd${i}Volt`].toFixed(2);
+  }
+}
 
 // Call the function to update devices with fake data
 // updateDevicesForTesting();
-
 // You can also set an interval to update the devices with new fake data periodically
 // setInterval(updateDevicesForTesting, 1000); // Update every second
 
