@@ -192,7 +192,7 @@ function initSocketConnection() {
             // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
             // You might need to adjust the order or the axes depending on how your IMU data is oriented.
             rov.rotation.set(pitch, yaw, roll);
-            rov.position.y = depth; // Adjust the depth based on the sensor data
+            rov.position.y = depth * 6; // 80 / 13 ft pool is * 6
         }
     });
 }
@@ -240,6 +240,18 @@ function animate() {
 let moveSpeed = 1.1; // Adjust speed as needed
 let autoFollow = true;
 
+const zoomFactor = 1.1; // Adjust this value to control the zoom speed
+
+function zoomIn() {
+    camera.zoom *= zoomFactor;
+    camera.updateProjectionMatrix();
+}
+
+function zoomOut() {
+    camera.zoom /= zoomFactor;
+    camera.updateProjectionMatrix();
+}
+
 function onDocumentKeyDown(event) {
     if (event.key === 'f' || event.key === 'F') { // 'f' or 'F' key to toggle follow mode
         autoFollow = !autoFollow;
@@ -282,6 +294,16 @@ function onDocumentKeyDown(event) {
                 rov.position.y -= moveSpeed;
             }
             break;
+        case '+':
+            case '=':
+                event.preventDefault(); // Prevent default to ensure '+' key is not used for other purposes
+                zoomIn();
+                break;
+            case '-':
+            case '_':
+                event.preventDefault(); // Prevent default to ensure '-' key is not used for other purposes
+                zoomOut();
+                break;
     }
 }
 
