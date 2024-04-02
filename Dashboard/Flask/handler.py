@@ -16,22 +16,15 @@ import time
 import datetime
 import csv
 
+
 # Function to get a unique log file name based on the current date and time
 def get_log_file_name():
     now = datetime.datetime.now()
     return f"data_log_{now.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
 
-# Initialize log file
-log_file_name = get_log_file_name()
-with open(log_file_name, 'w', newline='') as file:
-    writer = csv.writer(file)
-    # Write the header row with all data field titles
-    writer.writerow([
-        "Timestamp", "Yaw", "Pitch", "Roll", "Depth", "Depth Set", "Depth Control",
-        "Water", "Roll Control", "Pitch Control", "Thruster1", "Thruster2", "Thruster3",
-        "Thruster4", "Thruster5", "Thruster6", "BCD1", "BCD2", "BCD3", "BCD4",
-        "BCD1 Volt", "BCD2 Volt", "BCD3 Volt", "BCD4 Volt", "CPU"
-    ])
+def get_bare_log_file_name():
+    now = datetime.datetime.now()
+    return f"BARE_data_log_{now.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
 
 def log_data(dash_data):
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -48,6 +41,44 @@ def log_data(dash_data):
             dash_data['bcd2Volt'], dash_data['bcd3Volt'], dash_data['bcd4Volt'], dash_data['cpu']
         ])
 
+def bare_log(dash_data):
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    with open(bare_log_file_name, 'a', newline='') as file:
+        writer = csv.writer(file)
+        # Ensure the order of data values matches the header
+        writer.writerow([now] + [
+            dash_data['yaw'], dash_data['pitch'], dash_data['roll'], dash_data['depth'],
+            dash_data['depthSet'], dash_data['depthControl'], dash_data['water'],
+            dash_data['rollControl'], dash_data['pitchControl'], dash_data['thruster1'],
+            dash_data['thruster2'], dash_data['thruster3'], dash_data['thruster4'],
+            dash_data['thruster5'], dash_data['thruster6'], dash_data['bcd1'],
+            dash_data['bcd2'], dash_data['bcd3'], dash_data['bcd4'], dash_data['bcd1Volt'],
+            dash_data['bcd2Volt'], dash_data['bcd3Volt'], dash_data['bcd4Volt'], dash_data['cpu']
+        ])
+
+# Initialize log file
+log_file_name = get_log_file_name()
+with open(log_file_name, 'w', newline='') as file:
+    writer = csv.writer(file)
+    # Write the header row with all data field titles
+    writer.writerow([
+        "Timestamp", "Yaw", "Pitch", "Roll", "Depth", "Depth Set", "Depth Control",
+        "Water", "Roll Control", "Pitch Control", "Thruster1", "Thruster2", "Thruster3",
+        "Thruster4", "Thruster5", "Thruster6", "BCD1", "BCD2", "BCD3", "BCD4",
+        "BCD1 Volt", "BCD2 Volt", "BCD3 Volt", "BCD4 Volt", "CPU"
+    ])
+
+# Initialize log file
+bare_log_file_name = get_bare_log_file_name()
+with open(log_file_name, 'w', newline='') as file:
+    writer = csv.writer(file)
+    # Write the header row with all data field titles
+    writer.writerow([
+        "Timestamp", "Yaw", "Pitch", "Roll", "Depth", "Depth Set", "Depth Control",
+        "Water", "Roll Control", "Pitch Control", "Thruster1", "Thruster2", "Thruster3",
+        "Thruster4", "Thruster5", "Thruster6", "BCD1", "BCD2", "BCD3", "BCD4",
+        "BCD1 Volt", "BCD2 Volt", "BCD3 Volt", "BCD4 Volt", "CPU"
+    ])
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
@@ -88,6 +119,7 @@ def fetch_and_emit_data():
                 # Assigning each unpacked value to individual variables
                 int1, int2, int3, int4, int5, int6, int7, int8, int9, int10, int11, int12, int13, int14, int15, int16, int17, int18, int19, int20, int21, int22, int23, int24 = integers
                 print(type(int1))
+
                 dash_data = {
                     'yaw': int1,
                     'pitch': int2, 
@@ -115,6 +147,11 @@ def fetch_and_emit_data():
                     'cpu': int24
                 }
                 
+                if int24 == 0:
+                    print("Received zeros, skipping...")
+                    bare_log(dash_data)
+                    continue
+
                 log_data(dash_data)
                 
                 # Iterate over the dictionary and print each key-value pair
