@@ -192,7 +192,7 @@ function initSocketConnection() {
             // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
             // You might need to adjust the order or the axes depending on how your IMU data is oriented.
             rov.rotation.set(pitch, yaw, roll);
-            rov.position.y = -depth; // Adjust the depth based on the sensor data
+            rov.position.y = depth; // Adjust the depth based on the sensor data
         }
     });
 }
