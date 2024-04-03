@@ -218,8 +218,8 @@ function updateDevicesForTesting() {
 }
 
 // Call the function to update devices with fake data
-updateDevicesForTesting();
+// updateDevicesForTesting();
 
-// You can also set an interval to update the devices with new fake data periodically
-setInterval(updateDevicesForTesting, 1000); // Update every second
+// // You can also set an interval to update the devices with new fake data periodically
+// setInterval(updateDevicesForTesting, 1000); // Update every second
 
