@@ -163,26 +163,5 @@
     html.classList.add('dark');
   }
   </script>
-
-  <script>
-    const toggleDarkMode = () => {
-      const html = document.documentElement;
-      html.classList.toggle('dark');
-      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const darkModeToggle = document.createElement('button');
-      darkModeToggle.textContent = 'Toggle Dark Mode';
-      darkModeToggle.className = 'p-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors cursor-pointer absolute top-0 right-0 m-4';
-      darkModeToggle.onclick = toggleDarkMode;
-
-      document.body.appendChild(darkModeToggle);
-    });
-
-    if (localStorage.getItem('theme') === 'dark') {
-    html.classList.add('dark');
-  }
-  </script>
 </body>
 </html>

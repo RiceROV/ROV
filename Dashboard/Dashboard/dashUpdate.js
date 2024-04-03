@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const currentTime = Date.now();
         if (currentTime - lastUpdateTime >= 500 || first) {
 
-            updateGraph(liveChart, data.yaw, data.roll, data.pitch);
+            updateGraph(liveChart, data.depth, data.depthControl, data.depthSet, data.yaw, data.roll, data.pitch);
             lastUpdateTime = currentTime;
             first = false;
         }
@@ -77,15 +77,21 @@ function getNewDataGraphs(width = 700, height = 320) {
     const data = {
         labels: [], // Initial labels (times will be pushed here)
         datasets: [{
-            label: 'Depth (m)',
+            label: 'Depth (ft)',
             data: [], // Initial data points for Depth
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 1,
             fill: false
         }, {
-            label: 'Temperature (°C)',
+            label: 'Depth Control (ft)',
             data: [], // Initial data points for Temperature
             borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            fill: false
+        }, {
+            label: 'Depth Set (ft)',
+            data: [], // Initial data points for Temperature
+            borderColor: 'rgba(255, 99, 255, 1)',
             borderWidth: 1,
             fill: false
         }, {
@@ -151,31 +157,33 @@ function getNewDataGraphs(width = 700, height = 320) {
     return { div, chart };
 }
 
-function updateGraph(chart, yaw, roll, pitch) {
+function updateGraph(chart, depth, depth_control, depthSet, yaw, roll, pitch) {
     try {
-        const maxDataPoints = 100; // Set the maximum number of data points to display
-
-        const newDepth = Math.random() * 100;
-        const newTemp = Math.random() * 30;
         const newTime = chart.data.labels.length + 1;
-
-        // Remove the oldest data point if the buffer is full
-        if (chart.data.labels.length >= maxDataPoints) {
-            chart.data.labels.shift();
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.shift();
-            });
-        }
 
         // Update the graph with new data points
         chart.data.labels.push(newTime);
-        chart.data.datasets[0].data.push(newDepth);
-        chart.data.datasets[1].data.push(newTemp);
-        chart.data.datasets[2].data.push(yaw);
-        chart.data.datasets[3].data.push(roll);
-        chart.data.datasets[4].data.push(pitch);
+        chart.data.datasets[0].data.push(depth);
+        chart.data.datasets[1].data.push(depth_control);
+        chart.data.datasets[2].data.push(depthSet);
+        chart.data.datasets[3].data.push(yaw);
+        chart.data.datasets[4].data.push(roll);
+        chart.data.datasets[5].data.push(pitch);
         chart.update();
     } catch (error) {
         console.error('Error updating graph:', error);
+    }
+}
+
+function clearGraphData(chart) {
+    try {
+        // Clear the graph data
+        chart.data.labels = [];
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data = [];
+        });
+        chart.update();
+    } catch (error) {
+        console.error('Error clearing graph data:', error);
     }
 }

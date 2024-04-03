@@ -131,7 +131,7 @@ scene.add(seafloor);
 
 const loader = new GLTFLoader();
 //untitled_scaled.glb is the ROV CAD model
-loader.load('textures/untitled_scaled.glb', function (gltf) {
+loader.load('textures/untitled.glb', function (gltf) {
     gltf.scene.traverse(function (child) {
         if (child.isMesh) {
             child.material = new THREE.MeshStandardMaterial({ color: 0xffffff }); // White color
@@ -151,8 +151,8 @@ controls.screenSpacePanning = false;
 
 // Camera position
 // camera.position.z = 15;  // Decreased from 10
-// camera.position.y = -5;  // Decreased from 20
-// camera.position.x = -5;  // Decreased from 20
+// camera.position.y = -50;  // Decreased from 20
+// camera.position.x = -50;  // Decreased from 20
 // camera.lookAt(0, 0, 0);
 
 
@@ -187,7 +187,7 @@ function initSocketConnection() {
             const roll = THREE.MathUtils.degToRad(data.roll);
             const pitch = THREE.MathUtils.degToRad(data.pitch);
             const depth = data.depth;
-
+            
             // Apply rotation to the ROV model
             // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
             // You might need to adjust the order or the axes depending on how your IMU data is oriented.
@@ -204,9 +204,9 @@ function initSocketConnection() {
 //                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const xMagic = 10; // Adjust these values as needed
-const yMagic = 10; // Adjust these values as needed
-const zMagic = -1.3; // Adjust these values as needed
+const xMagic = 40; // Adjust these values as needed
+const yMagic = 15; // Adjust these values as needed
+const zMagic = 35.3; // Adjust these values as needed
 const magic = 5;
 function animate() {
     requestAnimationFrame(animate)
