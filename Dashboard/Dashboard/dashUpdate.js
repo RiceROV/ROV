@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     yaw = 0;
     roll = 0;
     pitch = 0;
-
+    let lastUpdateTime = 0;
+    first = true;
     // Uncomment for Socket Connect
     var socket = io.connect('http://localhost:30001');
 
@@ -28,7 +29,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('depthSet').textContent = data.depthSet.toFixed(2);
         document.getElementById('depthControl').textContent = data.depthControl.toFixed(2);
         document.getElementById('cpu').textContent = data.cpu.toFixed(2);
-        document.getElementById('water').textContent = data.water.toFixed(2);
         document.getElementById('thruster1').textContent = data.thruster1.toFixed(2);
         document.getElementById('thruster2').textContent = data.thruster2.toFixed(2);
         document.getElementById('thruster3').textContent = data.thruster3.toFixed(2);
@@ -44,19 +44,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('bcd3Volt').textContent = data.bcd3Volt.toFixed(2);
         document.getElementById('bcd4Volt').textContent = data.bcd4Volt.toFixed(2);
 
-        // Update the graph with the new data
-        // updateGraph(chart, data.yaw, data.roll, data.pitch);
+        const currentTime = Date.now();
+        if (currentTime - lastUpdateTime >= 500 || first) {
+
+            updateGraph(liveChart, data.yaw, data.roll, data.pitch);
+            lastUpdateTime = currentTime;
+            first = false;
+        }
+
     });
 
-    // Set interval to update every second (1000 milliseconds)
-    
-    // Uncomment for BCD Thruster stuff - BROKEN  RIGHT NOW
-    // setInterval(updateAllDevices, 1000);
-
-    // Update interval to be set correctly
-    // setInterval(function() {
-    //     updateGraph(liveChart, 0, 100, 0); // Pass the chart object and other necessary values here
-    // }, 1000);
+    // Add event listener for the clear button
+    const clearButton = document.getElementById('clearButton');
+    clearButton.addEventListener('click', () => {
+        clearGraphData(liveChart);
+    });
 });
 
 function getNewDataGraphs(width = 700, height = 320) {
@@ -112,31 +114,58 @@ function getNewDataGraphs(width = 700, height = 320) {
         ]
     };
     
+    
     // Create Chart
     const chart = new Chart(ctx, {
         type: 'line',
         data: data,
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Added to make the graph fill the container
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'linear',
                     position: 'bottom'
                 }
+            },
+            plugins: {
+                zoom: {
+                    pan: {
+                        enabled: true,
+                        mode: 'x'
+                    },
+                    zoom: {
+                        wheel: {
+                            enabled: true
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'x'
+                    }
+                }
             }
         }
     });
-    
-    return {div, chart}; 
+
+    return { div, chart };
 }
 
 function updateGraph(chart, yaw, roll, pitch) {
     try {
-        // Uncomment to simulate new sensor data
-        const newDepth = Math.random() * 100; // Replace with actual depth sensor data
-        const newTemp = Math.random() * 30; // Replace with actual temperature sensor data
-        const newTime = chart.data.labels.length + 1; // Simulating time in seconds
+        const maxDataPoints = 100; // Set the maximum number of data points to display
+
+        const newDepth = Math.random() * 100;
+        const newTemp = Math.random() * 30;
+        const newTime = chart.data.labels.length + 1;
+
+        // Remove the oldest data point if the buffer is full
+        if (chart.data.labels.length >= maxDataPoints) {
+            chart.data.labels.shift();
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.shift();
+            });
+        }
 
         // Update the graph with new data points
         chart.data.labels.push(newTime);
@@ -150,56 +179,3 @@ function updateGraph(chart, yaw, roll, pitch) {
         console.error('Error updating graph:', error);
     }
 }
-
-
-// Uncomment FOR BCD / THRUSTER
-
-// function updateOutput(deviceId, output) {
-//     const outputBar = document.getElementById(`output-${deviceId}`);
-//     if (output >= 0) {
-//         outputBar.style.backgroundColor = "green";
-//         outputBar.style.height = `${Math.abs(output) / 100 * 50}px`; // Adjust based on your range
-//         outputBar.style.bottom = "50%";
-//     } else {
-//         outputBar.style.backgroundColor = "red";
-//         outputBar.style.height = `${Math.abs(output) / 100 * 50}px`;
-//         outputBar.style.top = "50%";
-//     }
-// }
-
-// function updateVoltage(deviceId, voltage) {
-//     const voltageDisplay = document.getElementById(`voltage-${deviceId}`);
-//     voltageDisplay.innerText = `${voltage}V`;
-// }
-
-// function generateRandomBCDOutput() {
-//     // Generates -1, 0, or 1 for BCDs
-//     return Math.floor(Math.random() * 3) - 1;
-// }
-
-// function generateRandomThrusterOutput() {
-//     // Generates a random number between -32000 and 32000 for thrusters
-//     return Math.floor(Math.random() * (32000 - (-32000) + 1)) + (-32000);
-// }
-
-// function generateRandomVoltage() {
-//     // Generates a random voltage between 0V and 24V
-//     return Math.floor(Math.random() * 25); // 0 to 24
-// }
-
-// function updateAllDevices() {
-//     // Update BCDs
-//     for (let i = 1; i <= 4; i++) { // Assuming 4 BCDs
-//         const bcdOutput = generateRandomBCDOutput();
-//         updateOutput(`bcd${i}`, bcdOutput);
-//         updateVoltage(`bcd${i}`, generateRandomVoltage());
-//     }
-
-//     // Update Thrusters
-//     for (let i = 1; i <= 6; i++) { // Assuming 6 Thrusters
-//         const thrusterOutput = generateRandomThrusterOutput();
-//         updateOutput(`thruster${i}`, thrusterOutput);
-//         updateVoltage(`thruster${i}`, generateRandomVoltage());
-//     }
-// }
-

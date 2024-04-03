@@ -64,7 +64,7 @@ class Thruster {
 
     // Thruster text
     fill(0);
-    text(`ID: ${this.id}\n${this.value.toFixed(2)} V`, this.x, this.y + radius + 20);
+    text(`ID: ${this.id}\n${this.value.toFixed(3)} V`, this.x, this.y + radius + 20);
   }
 }
 
@@ -118,7 +118,7 @@ class BCD {
 
     // BCD text
     fill(0);
-    text(`Mode: ${this.mode}\nVoltage: ${this.voltage}`, this.x, this.y + radius + 20);
+    text(`Mode: ${this.mode}\nVoltage: ${this.voltage.toFixed(3)}`, this.x, this.y + radius + 20);
   }
 }
 
@@ -126,8 +126,11 @@ let thrusters = [];
 let bcds = [];
 
 function setup() {
-  width = 800
-  height = 480
+  const div = document.querySelector('#nav');
+  const width = div.clientWidth;
+  const heightMagic = -200
+  const height = div.clientHeight;
+  print(width, height);
   let canvas = createCanvas(width, height);
   canvas.parent('top-down'); // Attach the canvas to the 'top-down' div
   // canvas.class('canvas-border'); // Add a CSS class to the canvas element
@@ -215,7 +218,8 @@ function updateDevicesForTesting() {
 }
 
 // Call the function to update devices with fake data
-// updateDevicesForTesting();
+updateDevicesForTesting();
+
 // You can also set an interval to update the devices with new fake data periodically
-// setInterval(updateDevicesForTesting, 1000); // Update every second
+setInterval(updateDevicesForTesting, 1000); // Update every second
 

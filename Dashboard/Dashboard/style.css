@@ -1,336 +1,48 @@
-body {
-  font-family: "Montserrat", sans-serif;
-  background-color: #f2f2f7;
-  color: #1d1d1f;
-  margin: 0;
-  padding: 10px;
-  height: 100vh;
-  overflow: hidden;
-}
-
-h1 {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  font-size: 40px;
-  margin: 0 0 10px;
-}
-
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 1fr;
-  gap: 10px;
-  height: calc(100vh - 40px);
-}
-
-.canvas-border {
-border: 2px solid black; /* Adjust the border style, width, and color as desired */
-}
-
-.box {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  /*make max height 370 px but set to 350*/
-  height: 360px;
-  /* Set a maximum height, e.g., 90% of the viewport height */
-}
-
-.box2 {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.box3 {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-}
-
-h2 {
-  font-family: "Oxanium", sans-serif;
-  font-size: 26px;
-  font-weight: 600;
-  margin-top: 0;
-}
-
-.dg h2 {
-    margin-bottom: -30px; /* Decrease the value */
-    margin-top: 0; /* Remove any top margin */
-}
-
-.data-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 8px;
-}
-
-.data-item {
-  background-color: #f2f2f7;
-  padding: 6px;
-  border-radius: 8px;
-} 
-
-.data-item h3 {
-  font-size: 20px;
-  margin: 0 0 2px;
-  font-weight: bold;
-}
-
-/* .data-item-row {
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-} */
-
-/* .data-item-row .control-label {
-  margin-left: 6px;
-  font-size: 15px;
-} */
-
-.data-value {
-  font-size: 15px;
-}
-
-#dataGraphs {
-display: flex;       /* Enable Flexbox */
-justify-content: center; /* Center horizontally */
-align-items: center;     /* Center vertically */
-height: 100%;        /* Adjust based on your requirement */
-margin-top: 0px;
-}
-
-.header-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  font-family: "Montserrat", sans-serif;
-
+:root {
+  --color-primary: #2D3E50;
+  --color-secondary: #495B70;
+  --color-accent: #4CAF50;
+  --color-info: #2196F3;
+  --color-success: #4CAF50;
+  --color-warning: #FFC107;
+  --color-error: #F44336;
+  --color-bg-light: #F5F7FA;
+  --color-bg-dark: #1A202C;
+  --color-text-light: #FFFFFF;
+  --color-text-dark: #1A202C;
 }
 
 body {
-  font-family: 'Helvetica Neue', sans-serif;
-  background-color: #f1eeee; /* Dark Background */
-  color: #E0E0E0; /* Light text color */
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Oxanium', sans-serif;
 }
 
-.title {
-  font-size: 70px;
-  font-weight: 600;
-  background-image: linear-gradient(to left, #1027d4, #583697);
-  color: transparent;
-  background-clip: text;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.title-gradient {
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
   -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.container {
-  color: #E0E0E0; /* Light text color */
+.text-gray-800 {
+  color: var(--color-text);
 }
 
-.box {
-  margin-top: 0px;
-  padding: 10px;
-  border: 2px solid #52B788; /* Green Border */
-  border-radius: 10px;
-  background-color: #ffffff; /* Box Background */
-  box-shadow: 0px 4px 6px #000000; /* Box shadow for 3D effect */
-  transition: transform .2s; /* Transition effect for transform */
+.border-green-500 {
+  border-color: var(--color-accent);
 }
 
-.box2 {
-  margin-top: 0px;
-  padding: 10px;
-  border: 2px solid #52B788; /* Green Border */
-  border-radius: 10px;
-  background-color: #ffffff; /* Box Background */
-  box-shadow: 0px 4px 6px #000000; /* Box shadow for 3D effect */
-  transition: transform .2s; /* Transition effect for transform */
-  height: 88%
+.text-blue-500 {
+  color: var(--color-info);
 }
 
-.box3 {
-  margin-top: 0px;
-  padding: 10px;
-  border: 2px solid #52B788; /* Green Border */
-  border-radius: 10px;
-  background-color: #ffffff; /* Box Background */
-  box-shadow: 0px 4px 6px #000000; /* Box shadow for 3D effect */
-  transition: transform .2s; /* Transition effect for transform */
-  height: 88%
+.text-teal-500 {
+  color: var(--color-success);
 }
 
-.canvas-container {
-  margin-top: -20px;
-  display: grid;
-  justify-content: center;
-  align-items: center;
-}
-
-.canvas-container2 {
-  margin-top: -15px;
-  width: 100%;
-  height: 45%;
-  position: relative;
-}
-
-#nav {
-  display: flex;
-  justify-content: center; /* Horizontally center content */
-  align-items: center;     /* Vertically center content */
-  width: 100%;
-  height: 100%;
-  background-color: #f2f2f7;
-  border-radius: 12px;            /* Take full height of the parent */
-}
-
-.video-feed {
-  width: 100%;
-  height: 300px;
-  background-color: #000000;
-  text-align: center;
-  line-height: 300px;
-  color: #F4A261; /* Orange Text */
-}
-
-h3 {
-  color: #2A9D8F; /* Teal for Headings */
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.status-actual {
-  color: #007bff; /* Blue color for actual values */
-}
-
-.status-control {
-  color: #28a745; /* Green color for control values */
-}
-
-/* General Styles */
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-h2, h3 {
-  font-weight: 700;
-  color: #007bff;
-}
-
-.card {
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.data-value {
-  font-weight: 500;
-  font-size: 1.1em;
-}
-
-/* Specific Styles */
-.actual {
-  color: #007bff; /* Blue color for actual values */
-}
-
-.control {
-  color: #28a745; /* Green color for control values */
-}
-
-
-#controls input {
-  margin: 10px;
-  transition: background .3s ease;
-  color: #264653; /* Dark Blue Text */
-}
-
-#controls input:hover {
-  background: #6D6875; /* Purple Background on Hover */
-}
-
-.status-white {
-  color: white !important;
-}
-
-.status-black {
-  color: black !important;
-}
-
-.status-green {
-  color: #52B788 !important; /* Green color */
-}
-
-.status-blue {
-  color: #2A9D8F !important; /* Teal color */
-}
-
-.status-red {
-  color: #E63946 !important; /* Red color */
-}
-
-.core-info {
-  cursor: pointer !important;
-}
-
-#dataGraphs {
-  width: 100%;
-  height: 100%;
-}
-
-
-/* For Top Down View */
-.bcd-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 50px; /* Adjust the padding as needed */
-}
-
-.bcd-container .bcd {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: red;
-  position: relative; /* Set position to relative for positioning output bars and voltage */
-}
-
-.thruster-container {
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.thruster-container .thruster {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: blue;
-  display: inline-block; /* Align them in a row */
-  margin: 0 10px; /* Adjust spacing between thrusters */
-}
-
-/* Additional styles for output bars and voltage indicators */
-/* ... */

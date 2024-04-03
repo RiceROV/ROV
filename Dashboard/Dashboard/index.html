@@ -4,76 +4,185 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BayMax Pro - ROV Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">  
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <style>
+  </style>
 </head>
-<body>
-  <div class="header-container">
-    <h1>BayMax Pro - ROV Dashboard</h1>
-  </div>
-  
-  <div class="dashboard">
-    <div class="box">
-      <h2>Core System Information</h2>
-      <div class="data-grid">
-        <div class="data-item orientation">
-          <h3>Orientation</h3>
-          <p class="data-value">Yaw: <span id="yawData" class="data-value">--</span></p>
-          <p class="data-value">Roll: <span id="rollData" class="data-value actual">Actual: --</span>
-            <span id="rollControl" class="data-value control control-label">Control: --</span>
-          </p>
-          <p class="data-value">Pitch: <span id="pitchData" class="data-value actual">Actual: --</span>
-            <span id="pitchControl" class="data-value control control-label">Control: --</span>
-          </p>
-        </div>
-        <div class="data-item depth">
-          <h3>Depth Information</h3>
-          <p class="data-value">Depth: <span id="depth" class="data-value">--</span></p>
-          <p class="data-value">Depth Setpoint: <span id="depthSet" class="data-value">--</span></p>
-          <p class="data-value">Depth Control Value: <span id="depthControl" class="data-value">--</span></p>
-          <h3>System Health</h3>
-          <p class="data-value">CPU Temperature: <span id="cpu" class="data-value">--</span></p>
-          <p class="data-value">Water Level: <span id="water" class="data-value">--</span></p>
-        </div>
-        <div class="data-item thruster">
-          <h3>Thruster Performance</h3>
-          <p class="data-value">Thruster Speeds: T1 <span id="thruster1" class="data-value">--</span>, T2 <span id="thruster2" class="data-value">--</span>, T3 <span id="thruster3" class="data-value">--</span>, T4 <span id="thruster4" class="data-value">--</span>, T5 <span id="thruster5" class="data-value">--</span>, T6 <span id="thruster6" class="data-value">--</span></p>
-          <h3>Buoyancy Control</h3>
-          <p class="data-value">BCD States: B1 <span id="bcd1" class="data-value">--</span>, B2 <span id="bcd2" class="data-value">--</span>, B3 <span id="bcd3" class="data-value">--</span>, B4 <span id="bcd4" class="data-value">--</span></p>
-          <p class="data-value">BCD Voltages: B1 <span id="bcd1Volt" class="data-value">--</span>, B2 <span id="bcd2Volt" class="data-value">--</span>, B3 <span id="bcd3Volt" class="data-value">--</span>, B4 <span id="bcd4Volt" class="data-value">--</span></p>
+<body class="bg-gray-100 text-gray-800 font-montserrat">
+  <div class="container mx-auto py-8">
+    <h1 class="text-4xl font-bold text-center mb-8 title-gradient">BayMax Pro - ROV Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-green-500">
+        <h2 class="text-2xl font-bold mb-4 font-oxanium text-blue-500">Core System Information</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-lg font-bold mb-2 text-teal-500">Orientation</h3>
+            <p class="mb-1">Yaw: <span id="yawData" class="font-medium">--</span></p>
+            <p class="mb-1">Roll: <span id="rollData" class="font-medium text-blue-500">Actual: --</span>
+              <span id="rollControl" class="font-medium text-green-500">Control: --</span>
+            </p>
+            <p>Pitch: <span id="pitchData" class="font-medium text-blue-500">Actual: --</span>
+              <span id="pitchControl" class="font-medium text-green-500">Control: --</span>
+            </p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2 text-teal-500">Depth Information</h3>
+            <p class="mb-1">Depth: <span id="depth" class="font-medium">--</span></p>
+            <p class="mb-1">Depth Setpoint: <span id="depthSet" class="font-medium">--</span></p>
+            <p>Depth Control Value: <span id="depthControl" class="font-medium">--</span></p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-2 text-teal-500">Thruster Performance</h3>
+            <div class="mb-4">
+              <div class="text-base">
+                <p>
+                  <span class="font-medium">T1:</span>
+                  <span id="thruster1" class="ml-1">--</span>
+                </p>
+                <p>
+                  <span class="font-medium">T2:</span>
+                  <span id="thruster2" class="ml-1">--</span>
+                </p>
+                <p>
+                  <span class="font-medium">T3:</span>
+                  <span id="thruster3" class="ml-1">--</span>
+                </p>
+                <p>
+                  <span class="font-medium">T4:</span>
+                  <span id="thruster4" class="ml-1">--</span>
+                </p>
+                <p>
+                  <span class="font-medium">T5:</span>
+                  <span id="thruster5" class="ml-1">--</span>
+                </p>
+                <p>
+                  <span class="font-medium">T6:</span>
+                  <span id="thruster6" class="ml-1">--</span>
+                </p>
+              </div>
+              <p class="mb-1">CPU Temperature: <span id="cpu" class="font-medium">--</span></p>
+
+            </div>
+          </div>
+          <div>
+            <div class="mb-4">
+              <h3 class="text-lg font-bold mb-2 text-teal-500">BCD States</h3>
+              <ul class="grid grid-cols-2 gap-2">
+                <li>
+                  <span class="font-medium">B1:</span>
+                  <span id="bcd1" class="ml-1">--</span>
+                </li>
+                <li>
+                  <span class="font-medium">B2:</span>
+                  <span id="bcd2" class="ml-1">--</span>
+                </li>
+                <li>
+                  <span class="font-medium">B3:</span>
+                  <span id="bcd3" class="ml-1">--</span>
+                </li>
+                <li>
+                  <span class="font-medium">B4:</span>
+                  <span id="bcd4" class="ml-1">--</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-bold mb-2 text-teal-500">BCD Voltages</h3>
+              <ul class="grid grid-cols-2 gap-2">
+                <li>
+                  <span class="font-medium">B1:</span>
+                  <span id="bcd1Volt" class="ml-1">--</span>
+                </li>
+                <li>
+                  <span class="font-medium">B2:</span>
+                  <span id="bcd2Volt" class="ml-1">--</span>
+                </li>
+                <li>
+                  <span class="font-medium">B3:</span>
+                  <span id="bcd3Volt" class="ml-1">--</span>
+                </li>
+                <li>
+                  <span class="font-medium">B4:</span>
+                  <span id="bcd4Volt" class="ml-1">--</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-green-500">
+        <!-- Flex container -->
+        <div class="flex items-center mb-4"> <!-- Flex container with alignment -->
+            <h2 class="text-2xl font-bold font-oxanium text-blue-500 flex-grow">Graphs</h2>
+            <button id="clearButton">Clear Graph</button>
+        </div>
+        <div id="dataGraphs" class="w-full h-full"></div>
     </div>
 
-    <div class="box dg">  
-        <h2>Graphs</h2>
-        <div id="dataGraphs"></div>
+
+
+      <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-green-500">
+        <h2 class="text-2xl font-bold mb-4 font-oxanium text-blue-500">Simulation</h2>
+        <div class="canvas-container2" id="simulation-container">
+          <canvas id="nav" tabindex="0" class="w-full h-96"></canvas>
+        </div>
+        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+        <script type="module" src="/simRender.js"></script>
       </div>
 
-    <div class="box2">
-        <h2>Top Down View</h2>
-        <div class="canvas-container" id="top-down"></div> 
-        <script src="https://cdn.jsdelivr.net/npm/p5@1.9.1/lib/p5.js"></script>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-green-500">
+        <h2 class="text-2xl font-bold mb-4 font-oxanium text-blue-500">Top Down View</h2>
+        <div class="canvas-container" id="top-down"></div>
         <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
         <script src="./sketch.js"></script>
       </div>
-
-    <div class="box3" id="navigation-identification">
-      <h2>Simulation</h2>
-        <div class="canvas-container2">
-            <canvas id="nav" tabindex="0"></canvas>
-        </div>
-      <script type="module" src="/simRender.js"></script>            
     </div>
-
-    
   </div>
 
+  <!-- ... (scripts) ... -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.1/lib/p5.js"></script>
   <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="dashUpdate.js"></script>
+  <script> 
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const html = document.documentElement;
+
+  darkModeToggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  if (localStorage.getItem('theme') === 'dark') {
+    html.classList.add('dark');
+  }
+  </script>
+
+  <script>
+    const toggleDarkMode = () => {
+      const html = document.documentElement;
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkModeToggle = document.createElement('button');
+      darkModeToggle.textContent = 'Toggle Dark Mode';
+      darkModeToggle.className = 'p-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors cursor-pointer absolute top-0 right-0 m-4';
+      darkModeToggle.onclick = toggleDarkMode;
+
+      document.body.appendChild(darkModeToggle);
+    });
+
+    if (localStorage.getItem('theme') === 'dark') {
+    html.classList.add('dark');
+  }
+  </script>
 </body>
 </html>

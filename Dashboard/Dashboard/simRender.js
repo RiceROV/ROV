@@ -27,7 +27,7 @@ const renderer = new THREE.WebGLRenderer({
 const canvas = document.querySelector('#nav');
 const width = canvas.clientWidth;
 const heightMagic = -200
-const height = canvas.clientHeight - heightMagic; // Adjust the height to leave space for the dashboard
+const height = canvas.clientHeight; // Adjust the height to leave space for the dashboard
 
 // Initial setup for renderer size based on the canvas client size
 renderer.setSize(width, height); // The third parameter `false` tells the renderer to not set the canvas size style, only the drawing buffer size.
