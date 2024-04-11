@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.getElementById('bcd2').textContent = data.bcd2.toFixed(2);
         document.getElementById('bcd3').textContent = data.bcd3.toFixed(2);
         document.getElementById('bcd4').textContent = data.bcd4.toFixed(2);
-        document.getElementById('bcd1Volt').textContent = data.bcd1Volt.toFixed(2);
-        document.getElementById('bcd2Volt').textContent = data.bcd2Volt.toFixed(2);
-        document.getElementById('bcd3Volt').textContent = data.bcd3Volt.toFixed(2);
-        document.getElementById('bcd4Volt').textContent = data.bcd4Volt.toFixed(2);
+        // document.getElementById('bcd1Volt').textContent = data.bcd1Volt.toFixed(2);
+        // document.getElementById('bcd2Volt').textContent = data.bcd2Volt.toFixed(2);
+        // document.getElementById('bcd3Volt').textContent = data.bcd3Volt.toFixed(2);
+        // document.getElementById('bcd4Volt').textContent = data.bcd4Volt.toFixed(2);
 
         const currentTime = Date.now();
         if (currentTime - lastUpdateTime >= 500 || first) {
