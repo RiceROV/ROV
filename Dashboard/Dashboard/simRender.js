@@ -191,7 +191,7 @@ function initSocketConnection() {
             // Apply rotation to the ROV model
             // Note: Three.js uses Euler angles in the order of rotation: 'XYZ', which is a common standard.
             // You might need to adjust the order or the axes depending on how your IMU data is oriented.
-            rov.rotation.set(pitch, yaw, roll);
+            rov.rotation.set(-1 * pitch, -1 * yaw, -1* roll);
             rov.position.y = depth * 6; // 80 / 13 ft pool is * 6
         }
     });
