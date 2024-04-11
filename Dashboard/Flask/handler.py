@@ -147,7 +147,7 @@ def fetch_and_emit_data():
                     'cpu': int24
                 }
                 
-                if int24 == 0:
+                if int24 == 0 or int1 > 500 or int2 > 500 or int3 > 500:
                     print("Received zeros, skipping...")
                     bare_log(dash_data)
                     continue
